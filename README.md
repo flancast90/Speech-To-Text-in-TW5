@@ -22,8 +22,12 @@ An MarkDown rendition of the support chart is given below
 |---------------|--------------|-------------------|-------------|-------------|----------------|
 |NO|33|62|NO|7|3.0|
 
-### 
+<br />
 
+### Usage (when complete)
+In progress (probably drag n drop explantion)
+
+<br />
 
 ### License
 Copyright 2021 Finn Lancaster, Simon Huber, TonyM, collaborators, and the TiddlyWiki Community
