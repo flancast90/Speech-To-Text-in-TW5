@@ -1,0 +1,6 @@
+title: $:/plugins/flancast90/speech-to-text/styles
+tags: $:/tags/Stylesheet
+
+button.tc-active svg {
+	fill: <<colour alert-background>>;
+}
