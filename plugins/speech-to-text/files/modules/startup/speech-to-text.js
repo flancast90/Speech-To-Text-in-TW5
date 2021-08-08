@@ -48,6 +48,7 @@ exports.startup = function() {
 		
 		// WE WANT TO CHANGE BUTTON COLOUR BACK TO BLACK HERE
 		$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
+		$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording");
 	}
 			  
 	// We will grab the transcripts, and console.log
