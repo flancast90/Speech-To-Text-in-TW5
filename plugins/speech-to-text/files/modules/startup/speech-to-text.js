@@ -19,6 +19,9 @@ exports.after = ["startup"];
 exports.synchronous = true;
 
 exports.startup = function() {
+	if($tw.browser.isFirefox) {
+		return;
+	}
 	var isRecording = false;
 	// required for API to initialise
 	var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
