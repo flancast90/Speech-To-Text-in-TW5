@@ -1,0 +1,6 @@
+{
+	"title": "$:/plugins/flancast90/speech-to-text",
+	"description": "Speech to Text for ~TiddlyWiki5",
+	"version": "0.0.1-alpha",
+	"list": "readme license"
+}
