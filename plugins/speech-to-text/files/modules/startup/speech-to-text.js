@@ -53,6 +53,16 @@ exports.startup = function() {
 		$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
 		$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording");
 	}
+
+	recognition.onend = function() {
+		isRecording = false;
+		console.log("recognition has ended");
+		$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
+		
+		// WE WANT TO CHANGE BUTTON COLOUR BACK TO BLACK HERE
+		$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
+		$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording");
+	}
 			  
 	// We will grab the transcripts, and console.log
 	// the confidence here.
