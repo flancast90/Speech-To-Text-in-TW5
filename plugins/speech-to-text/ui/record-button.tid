@@ -4,6 +4,7 @@ tags: $:/tags/PageControls
 \define get-classes()
 $(tv-config-toolbar-class)$ tc-active
 \end
+\whitespace trim
 <$reveal state="$:/state/speech-to-text/recording" type="nomatch" text="yes">
 <$button class=<<tv-config-toolbar-class>> set="$:/state/speech-to-text/recording" setTo="yes">
 {{$:/plugins/flancast90/speech-to-text/images/record-button}}
