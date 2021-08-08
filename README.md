@@ -10,9 +10,9 @@ An MarkDown rendition of the support chart is given below
 <br />
 
 **Web (Computer)**
-|Chrome|Edge|FireFox|IE|Opera|Safari
-|------|----|-------|--------|-------
-|33|18|49|NO|21|7
+|Chrome|Edge|FireFox|IE|Opera|Safari|
+|------|----|-------|--------|------|
+|33|18|49|NO|21|7|
 
 **Mobile**
 |WebView Android|Chrome Android|FireFox for Android|Opera Android|Safari on iOS|SamSung Internet|
