@@ -16,5 +16,5 @@ An MarkDown rendition of the support chart is given below
 
 **Mobile**
 |WebView Android|Chrome Android|FireFox for Android|Opera Android|Safari on iOS|SamSung Internet|
-|--------------|--------------|-------------------|-------------|-------------|----------------|
+|---------------|--------------|-------------------|-------------|-------------|----------------|
 |NO|33|62|NO|7|3.0|
