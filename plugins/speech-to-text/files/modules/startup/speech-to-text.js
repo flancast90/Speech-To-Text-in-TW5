@@ -18,11 +18,26 @@ exports.platforms = ["browser"];
 exports.after = ["startup"];
 exports.synchronous = true;
 
+var speechRecognitionRunning = false;
+
 exports.startup = function() {
 	$tw.wiki.addEventListener("change",function(changes) {
 		if(changes["$:/state/speech-to-text/recording"]) {
-			var recordingState = $tw.wiki.getTiddlerText("$:/state/speech-to-text/recording") === "yes";
-			console.log(recordingState);
+			var recordingState = $tw.wiki.getTiddlerText("$:/state/speech-to-text/recording") === "yes",
+				speechRecognitionConfirmed = true;
+			if(!speechRecognitionRunning && recordingState) {
+				// Prompt the user for microphone access
+				speechRecognitionConfirmed = window.confirm("Do you want to start recording?");
+				if(speechRecognitionConfirmed) {
+					// Do something
+					speechRecognitionRunning = true;
+					console.log("recording started");
+				}
+			} else if(speechRecognitionRunning) {
+				// Do something
+				speechRecognitionRunning = false;
+				console.log("recording ended");
+			}
 		}
 	})
 };
