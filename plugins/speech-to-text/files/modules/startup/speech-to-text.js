@@ -19,7 +19,11 @@ exports.after = ["startup"];
 exports.synchronous = true;
 
 exports.startup = function() {
-
+	$tw.wiki.addEventListener("change",function(changes) {
+		if(changes["$:/state/speech-to-text/recording"]) {
+			console.log(changes);
+		}
+	})
 };
 
 })();
