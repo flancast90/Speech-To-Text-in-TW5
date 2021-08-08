@@ -11,7 +11,7 @@ An MarkDown rendition of the support chart is given below
 
 **Web (Computer)**
 |Chrome|Edge|FireFox|IE|Opera|Safari|
-|------|----|-------|--------|------|
+|------|----|-------|--|-----|------|
 |33|18|49|NO|21|7|
 
 **Mobile**
