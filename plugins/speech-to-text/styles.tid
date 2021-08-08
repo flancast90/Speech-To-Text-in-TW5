@@ -1,6 +1,6 @@
 title: $:/plugins/flancast90/speech-to-text/styles
 tags: $:/tags/Stylesheet
 
-button.tc-active svg {
+.tc-page-controls button.tc-active-recording svg, .tc-page-controls button.tc-active-recording:hover svg {
 	fill: <<colour dirty-indicator>>;
 }
