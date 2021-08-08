@@ -1,4 +1,4 @@
-**Collaborators:** The ``Speech-to-Text-for-TW5.js`` contains the base JS code to be converted to a plugin, specifically inside the ``Speech_to_Text()`` function. Over the next few days, I will be adding a few other things, such as detection of denial to access Mic, etc. The file also contains a VERY SIMPLE UI. Feel free to modify it/develop your own for the actual plugin UI, and please keep everyone informed of progress by periodically uploading the plugin code in this repo.
+**Collaborators:** The ``Speech-to-Text-for-TW5.js`` contains the base JS code to be converted to a plugin, specifically inside the ``Speech_to_Text()`` function. Over the next few days, I will be adding a few other things, such as detection of denial to access Mic, etc. The file also contains a VERY SIMPLE UI. Feel free to modify it/develop your own for the actual plugin UI, and please keep everyone informed of progress by periodically uploading the plugin code to this repo.
 
 <br />
 <br />
