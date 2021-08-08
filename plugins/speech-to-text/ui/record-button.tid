@@ -1,9 +1,6 @@
 title: $:/plugins/flancast90/speech-to-text/ui/Buttons/record-button
 tags: $:/tags/PageControls
 
-\define get-classes()
-$(tv-config-toolbar-class)$ tc-active-recording
-\end
 \whitespace trim
 <$reveal state="$:/state/speech-to-text/recording" type="nomatch" text="yes">
 <$button class=<<tv-config-toolbar-class>> set="$:/state/speech-to-text/recording" setTo="yes">
@@ -11,7 +8,7 @@ $(tv-config-toolbar-class)$ tc-active-recording
 </$button>
 </$reveal>
 <$reveal state="$:/state/speech-to-text/recording" type="match" text="yes">
-<$button class=<<get-classes>>>
+<$button class={{{ [{$:/state/speech-to-text/recording/ongoing}match[yes]then<tv-config-toolbar-class>addsuffix[ tc-active-recording]] ~[<tv-config-toolbar-class>] }}}>
 <$action-deletetiddler $tiddler="$:/state/speech-to-text/recording"/>
 {{$:/plugins/flancast90/speech-to-text/images/record-button}}
 </$button>
