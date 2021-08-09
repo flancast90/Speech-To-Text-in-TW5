@@ -56,7 +56,6 @@ exports.startup = function() {
 
 	recognition.onend = function() {
 		isRecording = false;
-		console.log("recognition has ended");
 		$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
 		
 		// WE WANT TO CHANGE BUTTON COLOUR BACK TO BLACK HERE
