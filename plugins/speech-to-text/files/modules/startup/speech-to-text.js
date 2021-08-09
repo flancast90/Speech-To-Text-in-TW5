@@ -77,6 +77,7 @@ exports.startup = function() {
 		var modificationFields = $tw.wiki.getModificationFields();
 		var title = $tw.wiki.generateNewTitle("New Transcript");
 		$tw.wiki.addTiddler(new $tw.Tiddler(creationFields,modificationFields,{title: title,text: transcript}));
+		$tw.rootWidget.invokeActionString('<$navigator story="$:/StoryList" history="$:/HistoryList"><$action-sendmessage $message="tm-edit-tiddler" $param="' + title + '"/></$navigator>');
 		
 		var confidence = event.results[0][0].confidence;
 		console.log(confidence);
