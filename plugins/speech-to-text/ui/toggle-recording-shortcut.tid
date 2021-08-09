@@ -1,0 +1,9 @@
+title: $:/plugins/flancast90/speech-to-text/ui/KeyboardShortcuts/toggle-recording
+tags: $:/tags/KeyboardShortcut
+key: ((toggle-recording))
+
+<$list filter="[{$:/state/speech-to-text/recording}match[yes]]" emptyMessage="""
+<$action-setfield $tiddler="$:/state/speech-to-text/recording" text="yes"/>
+""">
+</$action-deletetiddler $tiddler="$:/state/speech-to-text/recording"/>
+</$list>
