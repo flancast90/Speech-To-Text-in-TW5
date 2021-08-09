@@ -19,7 +19,7 @@ exports.after = ["startup"];
 exports.synchronous = true;
 
 exports.startup = function() {
-	if($tw.browser.isFirefox) {
+	if(!window.SpeechRecognition && !window.webkitSpeechRecognition) {
 		return;
 	}
 	var isRecording = false;
@@ -87,7 +87,7 @@ exports.startup = function() {
 			var recordingState = $tw.wiki.getTiddlerText("$:/state/speech-to-text/recording") === "yes";
 			if(!isRecording && recordingState) {
 				recognition.start();
-			} else {
+			} else if(isRecording) {
 				recognition.stop();
 				isRecording = false;
 				$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
