@@ -47,7 +47,7 @@ exports.startup = function() {
 		
 		// What is the best way to alert the user of 
 		// Mic-stopped recording? Use that method here.
-		$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
+		//$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
 		
 		// WE WANT TO CHANGE BUTTON COLOUR BACK TO BLACK HERE
 		$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
