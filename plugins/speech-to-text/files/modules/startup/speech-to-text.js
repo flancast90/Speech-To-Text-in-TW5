@@ -23,9 +23,12 @@ exports.startup = function() {
 		return;
 	}
 	var isRecording = false;
+	var fullTranscript = "";
+	var transcriptCounter = 0;
 	// required for API to initialise
 	var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 	var recognition = new SpeechRecognition();
+	recognition.continuous = true;
 
 	// This runs when the speech recognition service starts
 	recognition.onstart = function() {
@@ -44,7 +47,16 @@ exports.startup = function() {
 		isRecording = false;
 		// when user is done speaking
 		recognition.stop();
+
+		// WE WANT TO DISPLAY THE OUTPUT (saved in var transcript) IN TW5
+		var creationFields = $tw.wiki.getCreationFields();
+		var modificationFields = $tw.wiki.getModificationFields();
+		var title = $tw.wiki.generateNewTitle("New Transcript");
+		$tw.wiki.addTiddler(new $tw.Tiddler(creationFields,modificationFields,{title: title,text: fullTranscript}));
+		$tw.rootWidget.invokeActionString('<$navigator story="$:/StoryList" history="$:/HistoryList"><$action-sendmessage $message="tm-edit-tiddler" $param="' + title + '"/></$navigator>');
 		
+		fullTranscript = "";
+
 		// What is the best way to alert the user of 
 		// Mic-stopped recording? Use that method here.
 		//$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
@@ -56,30 +68,19 @@ exports.startup = function() {
 
 	recognition.onend = function() {
 		isRecording = false;
+		transcriptCounter = 0;
 		$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
 		
 		// WE WANT TO CHANGE BUTTON COLOUR BACK TO BLACK HERE
 		$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
 		$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording");
 	}
-			  
-	// We will grab the transcripts, and console.log
-	// the confidence here.
+
 	recognition.onresult = function(event) {
-		var transcript = event.results[0][0].transcript;
-		console.log(transcript);
-		
-		// This is what the user will see: the transcript of what they 		// said out-loud. We want to display this somehow in TW.
-		
-		// WE WANT TO DISPLAY THE OUTPUT (saved in var transcript) IN TW5
-		var creationFields = $tw.wiki.getCreationFields();
-		var modificationFields = $tw.wiki.getModificationFields();
-		var title = $tw.wiki.generateNewTitle("New Transcript");
-		$tw.wiki.addTiddler(new $tw.Tiddler(creationFields,modificationFields,{title: title,text: transcript}));
-		$tw.rootWidget.invokeActionString('<$navigator story="$:/StoryList" history="$:/HistoryList"><$action-sendmessage $message="tm-edit-tiddler" $param="' + title + '"/></$navigator>');
-		
-		var confidence = event.results[0][0].confidence;
-		console.log(confidence);
+		var transcript = event.results[transcriptCounter][0].transcript;
+		var confidence = event.results[transcriptCounter][0].confidence;
+		transcriptCounter += 1;
+		fullTranscript = fullTranscript + transcript;
 	};
 
 	$tw.wiki.addEventListener("change",function(changes) {
