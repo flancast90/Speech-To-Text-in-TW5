@@ -5,5 +5,5 @@ key: ((toggle-recording))
 <$list filter="[{$:/state/speech-to-text/recording}match[yes]]" emptyMessage="""
 <$action-setfield $tiddler="$:/state/speech-to-text/recording" text="yes"/>
 """>
-</$action-deletetiddler $tiddler="$:/state/speech-to-text/recording"/>
+<$action-deletetiddler $tiddler="$:/state/speech-to-text/recording"/>
 </$list>
