@@ -48,15 +48,6 @@ exports.startup = function() {
 		// when user is done speaking
 		recognition.stop();
 
-		// WE WANT TO DISPLAY THE OUTPUT (saved in var transcript) IN TW5
-		var creationFields = $tw.wiki.getCreationFields();
-		var modificationFields = $tw.wiki.getModificationFields();
-		var title = $tw.wiki.generateNewTitle("New Transcript");
-		$tw.wiki.addTiddler(new $tw.Tiddler(creationFields,modificationFields,{title: title,text: fullTranscript}));
-		$tw.rootWidget.invokeActionString('<$navigator story="$:/StoryList" history="$:/HistoryList"><$action-sendmessage $message="tm-edit-tiddler" $param="' + title + '"/></$navigator>');
-		
-		fullTranscript = "";
-
 		// What is the best way to alert the user of 
 		// Mic-stopped recording? Use that method here.
 		//$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
@@ -70,6 +61,17 @@ exports.startup = function() {
 		isRecording = false;
 		transcriptCounter = 0;
 		$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
+
+		// WE WANT TO DISPLAY THE OUTPUT (saved in var transcript) IN TW5
+		var creationFields = $tw.wiki.getCreationFields();
+		var modificationFields = $tw.wiki.getModificationFields();
+		var title = $tw.wiki.generateNewTitle("New Transcript");
+		if(fullTranscript !== "") {
+			$tw.wiki.addTiddler(new $tw.Tiddler(creationFields,modificationFields,{title: title,text: fullTranscript}));
+			$tw.rootWidget.invokeActionString('<$navigator story="$:/StoryList" history="$:/HistoryList"><$action-sendmessage $message="tm-edit-tiddler" $param="' + title + '"/></$navigator>');
+		}
+		
+		fullTranscript = "";
 		
 		// WE WANT TO CHANGE BUTTON COLOUR BACK TO BLACK HERE
 		$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
@@ -91,7 +93,7 @@ exports.startup = function() {
 			} else if(isRecording) {
 				recognition.stop();
 				isRecording = false;
-				$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
+				//$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
 				$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
 			}
 		}
