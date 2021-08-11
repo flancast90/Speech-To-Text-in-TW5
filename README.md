@@ -1,31 +1,72 @@
-**Collaborators:** The ``Speech-to-Text-for-TW5.js`` contains the base JS code to be converted to a plugin, specifically inside the ``Speech_to_Text()`` function. Over the next few days, I will be adding a few other things, such as detection of denial to access Mic, etc. The file also contains a VERY SIMPLE UI. Feel free to modify it/develop your own for the actual plugin UI, and please keep everyone informed of progress by periodically uploading the plugin code to this repo.
+# Speech-to-text-in-TW5
+![License Badge](https://img.shields.io/badge/license-MIT-blue) [![release](https://img.shields.io/badge/release-latest-brightgreen)](https://github.com/flancast90/Speech-to-text-in-TW5/releases/latest) ![Repo size](https://img.shields.io/badge/size-1.3MB-orange)
+
+<br /><br />
+
+### Summary
+
+
+Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermolene's TiddlyWiki5](https://github.com/jermolene/tiddlywiki5). The plugin adds the ability to create Tiddlers from just your computer microphone and voice! The speech-to-text plugin is also being updated all the time. Here are the release notes for each release so far, as well as what is planned for later updates!
+
+<br /><br />
+
+### Releases/Version History
+
+
+<details><summary><b>Coming Soon!</b></summary>
+  <ul>
+  	<li>Custom Verbal Commands: define command word and action!</li>
+    <li>Better UI: minor edits for after recording stopped with command</li>
+    <li>Language auto-detection: language defaults to whatever language TW is in!</li>
+    <li>language switch: change plugin language with TW built-in-languages</li>
+  </ul>
+</details>
+<details><summary><b>v1.0.4</b></summary>
+  <ul>
+  	<li>Support for language change</li>
+    <li>Verbal commands, starting with "command"</li>
+    <li>Safari on iOS support tested</li>
+  </ul>
+</details>
+<details><summary><b>v1.0.3</b></summary>
+  <ul>
+  	<li>Keyboard shortcut! Alt+Shift+R to start recording!</li>
+  </ul>
+</details>
+<details><summary><b>v1.0.2</b></summary>
+  <ul>
+  	<li>BUG FIXES: plugin no longer stops listening after pause.</li>
+  </ul>
+</details>
+<details><summary><b>v1.0.1</b></summary>
+  <ul>
+  	<li>Code Cleanup and minor UI edits.</li>
+  </ul>
+</details>
+<details><summary><b>v1.0.0</b></summary>
+  <ul>
+  	<li>Minimal Implementation. First Commit!</li>
+  </ul>
+</details>
+
+<br /><br />
+
+### Install
+
+
+<details><summary><b>Browser</b></details>
+  <ol>
+    <li>Install an <pre>empty.html</pre> from <a href="https://www.tiddlywiki.com">tiddlywiki.com</a></li>
+    <li>Go to <a href="https://speech-to-text.finnsoftware.net">speech-to-text.finnsoftware.net, the plugin homepage</a></li>
+    <li>In the <pre>Installation</pre> tiddler of the speech-to-text plugin page, drag the "Speech-to-text: Speech to Text for TW5" plugin box into your open <pre>empty.html</pre> wiki</li>
+  </ol>
+</details>
 
 <br />
-<br />
 
-### First-Things-First: Browser Support.
-The in-progress Speech-to-text plugin for TW5 has been decided to use the [Web-Speech API](https://www.google.com/intl/en/chrome/demos/speech.html). According to [Dev.Mozilla.Org](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API), this API is limited in support as of right now to ONLY the Edge, Chrome, and Safari browsers.
+**Node.js**
 
-<br />
 
-An MarkDown rendition of the support chart is given below
-
-<br />
-
-**Web (Computer)**
-|Chrome|Edge|FireFox|IE|Opera|Safari|
-|------|----|-------|--|-----|------|
-|33|18|49|NO|21|7|
-
-**Mobile**
-|WebView Android|Chrome Android|FireFox for Android|Opera Android|Safari on iOS|SamSung Internet|
-|---------------|--------------|-------------------|-------------|-------------|----------------|
-|NO|33|62|NO|7|3.0|
-
-<br />
-
-### Usage (when complete)
-In progress (probably drag n drop explantion)
 
 <br />
 
