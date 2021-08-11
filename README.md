@@ -1,17 +1,14 @@
 # Speech-to-text-in-TW5
 ![License Badge](https://img.shields.io/badge/license-MIT-blue) [![release](https://img.shields.io/badge/release-latest-brightgreen)](https://github.com/flancast90/Speech-to-text-in-TW5/releases/latest) ![Repo size](https://img.shields.io/badge/size-1.3MB-orange)
 
-<br /><br />
-
 ### Summary
 
 
 Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermolene's TiddlyWiki5](https://github.com/jermolene/tiddlywiki5). The plugin adds the ability to create Tiddlers from just your computer microphone and voice! The speech-to-text plugin is also being updated all the time. Here are the release notes for each release so far, as well as what is planned for later updates!
 
-<br /><br />
+<br />
 
 ### Releases/Version History
-
 
 <details><summary><b>Coming Soon!</b></summary>
   <ul>
@@ -49,16 +46,15 @@ Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermol
   </ul>
 </details>
 
-<br /><br />
+<br />
 
 ### Install
 
-
-<details><summary><b>Browser</b></details>
+<details><summary><b>Browser</b></summary>
   <ol>
-    <li>Install an <pre>empty.html</pre> from <a href="https://www.tiddlywiki.com">tiddlywiki.com</a></li>
-    <li>Go to <a href="https://speech-to-text.finnsoftware.net">speech-to-text.finnsoftware.net, the plugin homepage</a></li>
-    <li>In the <pre>Installation</pre> tiddler of the speech-to-text plugin page, drag the "Speech-to-text: Speech to Text for TW5" plugin box into your open <pre>empty.html</pre> wiki</li>
+    <li>Install an <pre style="display:inline;">empty.html</pre> from <a href="https://www.tiddlywiki.com">tiddlywiki.com</a></li>
+    <li>Go to <a href="https://speech-to-text.finnsoftware.net">speech-to-text.finnsoftware.net</a>, the plugin homepage</li>
+    <li>In the Installation tiddler of the speech-to-text plugin page, drag the "Speech-to-text: Speech to Text for TW5" plugin box into your open empty.html wiki</li>
   </ol>
 </details>
 
