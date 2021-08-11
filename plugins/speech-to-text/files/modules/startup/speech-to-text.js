@@ -103,6 +103,7 @@ exports.startup = function() {
 	recognition.onresult = function(event) {
 		var transcript = event.results[transcriptCounter][0].transcript;
 		var confidence = event.results[transcriptCounter][0].confidence;
+		var stopRecognizing = false;
 
 		if(transcriptCounter === 0) {
 			transcript = transcript.charAt(0).toUpperCase() + transcript.slice(1);
@@ -117,19 +118,37 @@ exports.startup = function() {
 		 * to pre-defined command phrases. This will also ease the command-adding process.
 		*/
 		//var language_lowered = transcript.toLowerCase();
-		if (transcript.includes("command") || transcript.includes("Command")) {
+		if (transcript.includes("Okay wiki") || transcript.includes("okay wiki") || transcript.includes("Okay Wiki") || transcript.includes("okay Wiki") || transcript.includes("ok wiki") || transcript.includes("Ok wiki") || transcript.includes("Ok Wiki") || transcript.includes("ok Wiki")) {
 
 			isCommand = true;
 			transcriptChunk = transcript;
 			console.log("SPEECH-TO-TEXT PLUGIN: detected command word, awaiting further instructions.");
 			// this is the actual text of the command
 			var action;
-			if(transcript.includes("command")) {
-				action = transcriptChunk.replace("command ", "");
-				transcriptChunk = transcriptChunk.replace("command ", "");
-			} else if(transcript.includes("Command")) {
-				action = transcriptChunk.replace("Command", "");
-				transcriptChunk = transcriptChunk.replace("Command ", "");
+			if(transcript.includes("ok wiki")) {
+				action = transcriptChunk.replace("ok wiki ", "");
+				transcriptChunk = transcriptChunk.replace("ok wiki ", "");
+			} else if(transcript.includes("Ok wiki")) {
+				action = transcriptChunk.replace("Ok wiki ", "");
+				transcriptChunk = transcriptChunk.replace("Ok wiki ", "");
+			} else if(transcript.includes("Ok Wiki")) {
+				action = transcriptChunk.replace("Ok Wiki ", "");
+				transcriptChunk = transcriptChunk.replace("Ok Wiki ", "");
+			} else if(transcript.includes("ok Wiki")) {
+				action = transcriptChunk.replace("ok Wiki ", "");
+				transcriptChunk = transcriptChunk.replace("ok Wiki ", "");
+			} else if(transcript.includes("okay Wiki")) {
+				action = transcriptChunk.replace("okay Wiki ", "");
+				transcriptChunk = transcriptChunk.replace("okay Wiki ", "");
+			} else if(transcript.includes("Okay Wiki")) {
+				action = transcriptChunk.replace("Okay Wiki ", "");
+				transcriptChunk = transcriptChunk.replace("Okay Wiki ", "");
+			} else if(transcript.includes("okay wiki")) {
+				action = transcriptChunk.replace("okay wiki ", "");
+				transcriptChunk = transcriptChunk.replace("okay wiki ", "");
+			} else if(transcript.includes("Okay wiki")) {
+				action = transcriptChunk.replace("Okay wiki ", "");
+				transcriptChunk = transcriptChunk.replace("Okay wiki ", "");
 			}
 			if (action.includes("change language to ")) {
 				console.log("SPEECH-TO-TEXT PLUGIN: change lang fired, awaiting to hear language name.");
@@ -158,6 +177,9 @@ exports.startup = function() {
 					recognition.stop();
 				}
 
+			} else if(action.includes("stop talking")) {
+				transcriptChunk = transcriptChunk.replace("stop talking", "");
+				stopRecognizing = true;
 			}
 		}
 
@@ -168,6 +190,9 @@ exports.startup = function() {
 		} else {
 			fullTranscript = fullTranscript + transcriptChunk;
 			$tw.wiki.setText("$:/state/speech-to-text/transcript","text",undefined,fullTranscript);
+		}
+		if(stopRecognizing) {
+			recognition.stop();
 		}
 		isCommand = false;
 	};
