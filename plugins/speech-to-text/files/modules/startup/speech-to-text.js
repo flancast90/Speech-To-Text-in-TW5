@@ -118,13 +118,14 @@ exports.startup = function() {
 		 * to pre-defined command phrases. This will also ease the command-adding process.
 		*/
 		//var language_lowered = transcript.toLowerCase();
-		if (transcript.includes("Ok Vichi") || transcript.includes("ok Vichi") || transcript.includes("Ok WC") || transcript.includes("OK WC") || transcript.includes("ok WC") || transcript.includes("Okay Vichy") || transcript.includes("okay Vichy") || transcript.includes("Okay Vicky") || transcript.includes("okay Vicky") || transcript.includes("Ok Vicky") || transcript.includes("ok Vicky") || transcript.includes("Okay wiki") || transcript.includes("okay wiki") || transcript.includes("Okay Wiki") || transcript.includes("okay Wiki") || transcript.includes("ok wiki") || transcript.includes("Ok wiki") || transcript.includes("Ok Wiki") || transcript.includes("ok Wiki") || transcript.includes("OK wiki") || transcript.includes("OK Wiki")) {
+		if (transcript.includes("Ok vicchi") || transcript.includes("Ok Vicchi") || transcript.includes("ok vicchi") || transcript.includes("ok Vicchi") || transcript.includes("Ok Vichi") || transcript.includes("ok Vichi") || transcript.includes("Ok WC") || transcript.includes("OK WC") || transcript.includes("ok WC") || transcript.includes("Okay Vichy") || transcript.includes("okay Vichy") || transcript.includes("Okay Vicky") || transcript.includes("okay Vicky") || transcript.includes("Ok Vicky") || transcript.includes("ok Vicky") || transcript.includes("Okay wiki") || transcript.includes("okay wiki") || transcript.includes("Okay Wiki") || transcript.includes("okay Wiki") || transcript.includes("ok wiki") || transcript.includes("Ok wiki") || transcript.includes("Ok Wiki") || transcript.includes("ok Wiki") || transcript.includes("OK wiki") || transcript.includes("OK Wiki")) {
 
 			isCommand = true;
 			transcriptChunk = transcript;
 			console.log("SPEECH-TO-TEXT PLUGIN: detected command word, awaiting further instructions.");
 			// this is the actual text of the command
 			var action;
+			// TODO: WE COULD PROBABLY USE A FUNCTION FOR THIS
 			if(transcript.includes("ok wiki")) {
 				action = transcriptChunk.replace("ok wiki ", "");
 				transcriptChunk = transcriptChunk.replace("ok wiki ", "");
@@ -179,6 +180,24 @@ exports.startup = function() {
 			} else if(transcript.includes("ok Vichi")) {
 				action = transcriptChunk.replace("ok Vichi ", "");
 				transcriptChunk = transcriptChunk.replace("ok Vichi ", "");
+			} else if(transcript.includes("Ok vichi")) {
+				action = transcriptChunk.replace("Ok vichi ", "");
+				transcriptChunk = transcriptChunk.replace("Ok vichi ", "");
+			} else if(transcript.includes("ok vichi")) {
+				action = transcriptChunk.replace("ok vichi ", "");
+				transcriptChunk = transcriptChunk.replace("ok vichi ", "");
+			} else if(transcript.includes("Ok Vicchi")) {
+				action = transcriptChunk.replace("Ok Vicchi ", "");
+				transcriptChunk = transcriptChunk.replace("Ok Vicchi ", "");
+			} else if(transcript.includes("ok Vicchi")) {
+				action = transcriptChunk.replace("ok Vicchi ", "");
+				transcriptChunk = transcriptChunk.replace("ok Vicchi ", "");
+			} else if(transcript.includes("Ok vicchi")) {
+				action = transcriptChunk.replace("Ok vicchi ", "");
+				transcriptChunk = transcriptChunk.replace("Ok vicchi ", "");
+			} else if(transcript.includes("ok vicchi")) {
+				action = transcriptChunk.replace("ok vicchi ", "");
+				transcriptChunk = transcriptChunk.replace("ok vicchi ", "");
 			} else if(transcript.includes("ok WC")) {
 				action = transcriptChunk.replace("ok WC ", "");
 				transcriptChunk = transcriptChunk.replace("ok WC ", "");
@@ -204,8 +223,8 @@ exports.startup = function() {
 
 				// NOTE: finnish is spelled as "finish" because the program always
 				// interprets it as such
-				var name = ["african", "indonesian", "malaysian", "catalonian", "german", "english", "spanish", "basque", "french", "croatian", "icelandic", "italian", "hungarian", "netherlandic", "norwegian", "polish", "portuguese", "romanian", "slavic", "finish", "swedish", "turkish", "bulgarian", "russian", "serbian", "korean", "chinese", "japanese", "latin"];
-				var identifier = ["af-ZA", "id-ID", "ms-MY", "ca-ES", "de-DE", "en-US", "es-ES", "eu-ES", "fr-FR", "hr-HR", "is-IS", "it-IT", "hu-HU", "nl-NL", "nb-NO", "pl-PL", "pt-PT", "ro-RO", "sk-SK", "fi-FI", "sv-SE", "tr-TR", "bg-BG", "ru-RU", "sr-RS", "ko-KR", "cmn-Hans-CN", "ja-JP", "la"];
+				var name = ["africaans", "indonesian", "malaysian", "catalonian", "german", "english", "spanish", "basque", "french", "croatian", "icelandic", "italian", "hungarian", "netherlandic", "norwegian", "polish", "portuguese", "romanian", "slavic", "finish", "finnish", "swedish", "turkish", "bulgarian", "russian", "serbian", "korean", "chinese", "japanese", "latin"];
+				var identifier = ["af-ZA", "id-ID", "ms-MY", "ca-ES", "de-DE", "en-US", "es-ES", "eu-ES", "fr-FR", "hr-HR", "is-IS", "it-IT", "hu-HU", "nl-NL", "nb-NO", "pl-PL", "pt-PT", "ro-RO", "sk-SK", "fi-FI", "fi-FI", "sv-SE", "tr-TR", "bg-BG", "ru-RU", "sr-RS", "ko-KR", "cmn-Hans-CN", "ja-JP", "la"];
 
 				var user_specified_name = name.indexOf(lang_selection.toLowerCase());
 				if(action.includes("change language to ")) {
