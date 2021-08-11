@@ -78,7 +78,26 @@ Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermol
   </ol>
 </details>
 
+<br />
 
+### Getting Started
+
+
+The Speech-to-Text plugin for TW5 is near limitless in applications in TiddlyWiki. Just like Google Docs already supports, the plugin adds a button to the wiki sidebar so that you can speak into the Mic, and get a transcript of your conversation as a TiddlyWiki Tiddler!
+
+**Starting the Plugin to Record**
+
+To test it out, follow the install instructions above, or just test out a demo version at [speech-to-text.finnsoftware.net](https://speech-to-text.finnsoftware.net). Once loaded, you should see a Microphone button on the wiki sidebar. Click it, and when you see a "Recording Started", you know that it is listening. For any questions, refer to the image below:
+
+![Recording Started](https://i.imgur.com/rhleClx.png)
+
+<br />
+
+**Stopping the Plugin from Recording**
+
+To stop the plugin, you can click the Mic icon on the wiki sidebar again, or, since >= v1.0.4, you can say "Ok Wiki, stop talking". You will get a message that the "Recording Stopped", and the transcript will be added to a new Tiddler (see image).
+
+![Recording stopped](https://i.imgur.com/XMqO2ud.png)
 
 <br />
 
