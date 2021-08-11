@@ -52,15 +52,29 @@ Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermol
 
 <details><summary><b>Browser</b></summary>
   <ol>
-    <li>Install an <pre style="display:inline;">empty.html</pre> from <a href="https://www.tiddlywiki.com">tiddlywiki.com</a></li>
+    <li>Install an "empty.html" from <a href="https://www.tiddlywiki.com">tiddlywiki.com</a></li>
+    <br />
     <li>Go to <a href="https://speech-to-text.finnsoftware.net">speech-to-text.finnsoftware.net</a>, the plugin homepage</li>
-    <li>In the Installation tiddler of the speech-to-text plugin page, drag the "Speech-to-text: Speech to Text for TW5" plugin box into your open empty.html wiki</li>
+    <br />
+    <li>In the Installation tiddler of the speech-to-text plugin page, drag the "Speech-to-text: Speech to Text for TW5" plugin box into your open "empty.html" instance. You now have the plugin! 🎉</li>
   </ol>
 </details>
 
-<br />
 
-**Node.js**
+<details><summary><b>Node.js</b></summary>
+  <ol>
+    <li>Install Node.js and NPM (Node Package Manager) from <a href="https://nodejs.org/en/download/">these instructions</a></a></li>
+    <br />
+    <li>In your terminal, type: <code>npm install -g tiddlywiki</code></li>
+    <br />
+    <li>In your terminal again, create a new wiki with <code>tiddlywiki mynewwiki --init server</code></li>
+    <br />
+    <li>OPTIONAL: you may want to tell TiddlyWiki where the plugin will be found so you can store it in any folder. To do so, type <code>export TIDDLYWIKI_PLUGIN_PATH="$HOME/location_of_plugin"</code></li>
+    <li>You then can install the latest version of the plugin via <a href="https://github.com/flancast90/Speech-To-Text-in-TW5/releases/latest/">This Link</a> as either a .zip or .tar.gz. *Make sure you extract the files to the location you specified in the last step!</li>
+    <br />
+    <li>That's it! 🎉 Launch your new wiki with the plugin using <code>tiddlywiki mynewwiki --listen</code></li> 
+  </ol>
+</details>
 
 
 
