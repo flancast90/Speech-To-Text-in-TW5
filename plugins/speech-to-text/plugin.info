@@ -2,6 +2,6 @@
 	"title": "$:/plugins/flancast90/speech-to-text",
 	"description": "Speech to Text for TiddlyWiki5",
 	"author": "Finn Lancaster",
-	"version": "1.0.5",
+	"version": "1.0.5-alpha",
 	"list": "readme license"
 }

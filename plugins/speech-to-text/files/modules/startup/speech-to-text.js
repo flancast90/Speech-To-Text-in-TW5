@@ -83,7 +83,7 @@ exports.startup = function() {
 			var modificationFields = $tw.wiki.getModificationFields();
 			var title = $tw.wiki.generateNewTitle("New Transcript");
 			if(fullTranscript !== "") {
-				$tw.wiki.addTiddler(new $tw.Tiddler(creationFields,modificationFields,{title: title,text: fullTranscript}));
+				$tw.wiki.addTiddler(new $tw.Tiddler(creationFields,modificationFields,{ title: title, text: fullTranscript.replace(/\s+$/, '') }));
 				$tw.rootWidget.invokeActionString('<$navigator story="$:/StoryList" history="$:/HistoryList"><$action-sendmessage $message="tm-edit-tiddler" $param="' + title + '"/></$navigator>');
 			}
 			
@@ -118,7 +118,7 @@ exports.startup = function() {
 		 * to pre-defined command phrases. This will also ease the command-adding process.
 		*/
 		//var language_lowered = transcript.toLowerCase();
-		if (transcript.includes("Okay wiki") || transcript.includes("okay wiki") || transcript.includes("Okay Wiki") || transcript.includes("okay Wiki") || transcript.includes("ok wiki") || transcript.includes("Ok wiki") || transcript.includes("Ok Wiki") || transcript.includes("ok Wiki")) {
+		if (transcript.includes("Ok Vichi") || transcript.includes("ok Vichi") || transcript.includes("Ok WC") || transcript.includes("OK WC") || transcript.includes("ok WC") || transcript.includes("Okay Vichy") || transcript.includes("okay Vichy") || transcript.includes("Okay Vicky") || transcript.includes("okay Vicky") || transcript.includes("Ok Vicky") || transcript.includes("ok Vicky") || transcript.includes("Okay wiki") || transcript.includes("okay wiki") || transcript.includes("Okay Wiki") || transcript.includes("okay Wiki") || transcript.includes("ok wiki") || transcript.includes("Ok wiki") || transcript.includes("Ok Wiki") || transcript.includes("ok Wiki") || transcript.includes("OK wiki") || transcript.includes("OK Wiki")) {
 
 			isCommand = true;
 			transcriptChunk = transcript;
@@ -137,6 +137,12 @@ exports.startup = function() {
 			} else if(transcript.includes("ok Wiki")) {
 				action = transcriptChunk.replace("ok Wiki ", "");
 				transcriptChunk = transcriptChunk.replace("ok Wiki ", "");
+			} else if(transcript.includes("OK Wiki")) {
+				action = transcriptChunk.replace("OK Wiki ", "");
+				transcriptChunk = transcriptChunk.replace("OK Wiki ", "");
+			} else if(transcript.includes("OK wiki")) {
+				action = transcriptChunk.replace("OK wiki ", "");
+				transcriptChunk = transcriptChunk.replace("OK wiki ", "");
 			} else if(transcript.includes("okay Wiki")) {
 				action = transcriptChunk.replace("okay Wiki ", "");
 				transcriptChunk = transcriptChunk.replace("okay Wiki ", "");
@@ -149,10 +155,48 @@ exports.startup = function() {
 			} else if(transcript.includes("Okay wiki")) {
 				action = transcriptChunk.replace("Okay wiki ", "");
 				transcriptChunk = transcriptChunk.replace("Okay wiki ", "");
+			} else if(transcript.includes("Ok Vicky")) {
+				action = transcriptChunk.replace("Ok Vicky ", "");
+				transcriptChunk = transcriptChunk.replace("Ok Vicky ", "");
+			} else if(transcript.includes("ok Vicky")) {
+				action = transcriptChunk.replace("ok Vicky ", "");
+				transcriptChunk = transcriptChunk.replace("ok Vicky ", "");
+			} else if(transcript.includes("okay Vicky")) {
+				action = transcriptChunk.replace("okay Vicky ", "");
+				transcriptChunk = transcriptChunk.replace("okay Vicky ", "");
+			} else if(transcript.includes("Okay Vicky")) {
+				action = transcriptChunk.replace("Okay Vicky ", "");
+				transcriptChunk = transcriptChunk.replace("Okay Vicky ", "");
+			} else if(transcript.includes("Okay Vichy")) {
+				action = transcriptChunk.replace("Okay Vichy ", "");
+				transcriptChunk = transcriptChunk.replace("Okay Vichy ", "");
+			} else if(transcript.includes("okay Vichy")) {
+				action = transcriptChunk.replace("okay Vichy ", "");
+				transcriptChunk = transcriptChunk.replace("okay Vichy ", "");
+			} else if(transcript.includes("Ok Vichi")) {
+				action = transcriptChunk.replace("Ok Vichi ", "");
+				transcriptChunk = transcriptChunk.replace("Ok Vichi ", "");
+			} else if(transcript.includes("ok Vichi")) {
+				action = transcriptChunk.replace("ok Vichi ", "");
+				transcriptChunk = transcriptChunk.replace("ok Vichi ", "");
+			} else if(transcript.includes("ok WC")) {
+				action = transcriptChunk.replace("ok WC ", "");
+				transcriptChunk = transcriptChunk.replace("ok WC ", "");
+			} else if(transcript.includes("Ok WC")) {
+				action = transcriptChunk.replace("Ok WC ", "");
+				transcriptChunk = transcriptChunk.replace("Ok WC ", "");
+			} else if(transcript.includes("OK WC")) {
+				action = transcriptChunk.replace("OK WC ", "");
+				transcriptChunk = transcriptChunk.replace("OK WC ", "");
 			}
-			if (action.includes("change language to ")) {
+			if (action.includes("change language to ") || action.includes("Change language to ")) {
 				console.log("SPEECH-TO-TEXT PLUGIN: change lang fired, awaiting to hear language name.");
-				var lang_selection = action.split("change language to ")[1];
+				var lang_selection;
+				if(action.includes("change language to ")) {
+					lang_selection = action.split("change language to ")[1];
+				} else if(action.includes("Change language to ")) {
+					lang_selection = action.split("Change language to ")[1];
+				}
 				console.log("SPEECH-TO-TEXT PLUGIN: attempting to change language to " + lang_selection);
 				// for switching language name to identifier such as en_US, we will 
 				// use arrays that share indexes as a sort of dictionary. For example,
@@ -164,7 +208,11 @@ exports.startup = function() {
 				var identifier = ["af-ZA", "id-ID", "ms-MY", "ca-ES", "de-DE", "en-US", "es-ES", "eu-ES", "fr-FR", "hr-HR", "is-IS", "it-IT", "hu-HU", "nl-NL", "nb-NO", "pl-PL", "pt-PT", "ro-RO", "sk-SK", "fi-FI", "sv-SE", "tr-TR", "bg-BG", "ru-RU", "sr-RS", "ko-KR", "cmn-Hans-CN", "ja-JP", "la"];
 
 				var user_specified_name = name.indexOf(lang_selection.toLowerCase());
-				transcriptChunk = transcriptChunk.replace("change language to " + lang_selection, "");
+				if(action.includes("change language to ")) {
+					transcriptChunk = transcriptChunk.replace("change language to " + lang_selection, "");
+				} else if(action.includes("Change language to ")) {
+					transcriptChunk = transcriptChunk.replace("Change language to " + lang_selection, "");
+				}
 				// if error, tell the user.
 				if (user_specified_name === -1) {
 					$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/error-finding-lang",{variables:{language:lang_selection}});
@@ -177,8 +225,12 @@ exports.startup = function() {
 					recognition.stop();
 				}
 
-			} else if(action.includes("stop talking")) {
-				transcriptChunk = transcriptChunk.replace("stop talking", "");
+			} else if(action.includes("stop talking") || action.includes("Stop talking")) {
+				if(action.includes("stop talking")) {
+					transcriptChunk = transcriptChunk.replace("stop talking", "");
+				} else if(action.includes("Stop talking")) {
+					transcriptChunk = transcriptChunk.replace("Stop talking", "");
+				}
 				stopRecognizing = true;
 			}
 		}
