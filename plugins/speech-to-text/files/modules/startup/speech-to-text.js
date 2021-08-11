@@ -223,8 +223,8 @@ exports.startup = function() {
 
 				// NOTE: finnish is spelled as "finish" because the program always
 				// interprets it as such
-				var name = ["africaans", "indonesian", "malaysian", "catalonian", "german", "english", "spanish", "basque", "french", "croatian", "icelandic", "italian", "hungarian", "netherlandic", "norwegian", "polish", "portuguese", "romanian", "slavic", "finish", "finnish", "swedish", "turkish", "bulgarian", "russian", "serbian", "korean", "chinese", "japanese", "latin"];
-				var identifier = ["af-ZA", "id-ID", "ms-MY", "ca-ES", "de-DE", "en-US", "es-ES", "eu-ES", "fr-FR", "hr-HR", "is-IS", "it-IT", "hu-HU", "nl-NL", "nb-NO", "pl-PL", "pt-PT", "ro-RO", "sk-SK", "fi-FI", "fi-FI", "sv-SE", "tr-TR", "bg-BG", "ru-RU", "sr-RS", "ko-KR", "cmn-Hans-CN", "ja-JP", "la"];
+				var name = ["africaans", "indonesian", "malaysian", "catalonian", "german", "english", "spanish", "basque", "french", "croatian", "icelandic", "italian", "hungarian", "netherlandic", "norwegian", "polish", "portuguese", "romanian", "slavic", "finish", "finnish", "swedish", "turkish", "bulgarian", "russian", "serbian", "korean", "chinese", "japanese", "persian", "latin"];
+				var identifier = ["af-ZA", "id-ID", "ms-MY", "ca-ES", "de-DE", "en-US", "es-ES", "eu-ES", "fr-FR", "hr-HR", "is-IS", "it-IT", "hu-HU", "nl-NL", "nb-NO", "pl-PL", "pt-PT", "ro-RO", "sk-SK", "fi-FI", "fi-FI", "sv-SE", "tr-TR", "bg-BG", "ru-RU", "sr-RS", "ko-KR", "cmn-Hans-CN", "ja-JP", "fa-IR", "la"];
 
 				var user_specified_name = name.indexOf(lang_selection.toLowerCase());
 				if(action.includes("change language to ")) {
