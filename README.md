@@ -10,7 +10,8 @@ Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermol
 
 ### Releases/Version History
 
-<details><summary><b>Coming Soon!</b></summary>
+
+<details><summary>Coming Soon!</summary>
   <ul>
   	<li>Custom Verbal Commands: define command word and action!</li>
     <li>Better UI: minor edits for after recording stopped with command</li>
@@ -18,31 +19,31 @@ Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermol
     <li>language switch: change plugin language with TW built-in-languages</li>
   </ul>
 </details>
-<details><summary><b>v1.0.4</b></summary>
+<details><summary>v1.0.4</summary>
   <ul>
   	<li>Support for language change</li>
     <li>Verbal commands, starting with "command"</li>
     <li>Safari on iOS support tested</li>
   </ul>
 </details>
-<details><summary><b>v1.0.3</b></summary>
+<details><summary>v1.0.3</summary>
   <ul>
   	<li>Keyboard shortcut! Alt+Shift+R to start recording!</li>
   </ul>
 </details>
-<details><summary><b>v1.0.2</b></summary>
+<details><summary>v1.0.2</summary>
   <ul>
   	<li>BUG FIXES: plugin no longer stops listening after pause.</li>
   </ul>
 </details>
-<details><summary><b>v1.0.1</b></summary>
+<details><summary>v1.0.1</summary>
   <ul>
   	<li>Code Cleanup and minor UI edits.</li>
   </ul>
 </details>
-<details><summary><b>v1.0.0</b></summary>
+<details><summary>v1.0.0</summary>
   <ul>
-  	<li>Minimal Implementation. First Commit!</li>
+  	<li>Minimal Implementation. First Release!</li>
   </ul>
 </details>
 
@@ -50,18 +51,19 @@ Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermol
 
 ### Install
 
-<details><summary><b>Browser</b></summary>
+
+<details><summary>Browser</summary>
   <ol>
-    <li>Install an "empty.html" from <a href="https://www.tiddlywiki.com">tiddlywiki.com</a></li>
+    <li>Install an <code>empty.html</code> from <a href="https://www.tiddlywiki.com">tiddlywiki.com, or use your own existing TiddlyWiki</a></li>
     <br />
     <li>Go to <a href="https://speech-to-text.finnsoftware.net">speech-to-text.finnsoftware.net</a>, the plugin homepage</li>
     <br />
-    <li>In the Installation tiddler of the speech-to-text plugin page, drag the "Speech-to-text: Speech to Text for TW5" plugin box into your open "empty.html" instance. You now have the plugin! 🎉</li>
+    <li>In the Installation tiddler of the speech-to-text plugin page, drag the "Speech-to-text: Speech to Text for TW5" plugin box into your open <code>empty.html</code> instance, or open existing TiddlyWiki. You now have the plugin! 🎉</li>
   </ol>
 </details>
 
 
-<details><summary><b>Node.js</b></summary>
+<details><summary>Node.js</summary>
   <ol>
     <li>Install Node.js and NPM (Node Package Manager) from <a href="https://nodejs.org/en/download/">these instructions</a></a></li>
     <br />
@@ -81,7 +83,7 @@ Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermol
 <br />
 
 ### License
-```
+<pre>
 Copyright 2021 Finn Lancaster, Simon Huber, TonyM, collaborators, and the TiddlyWiki Community
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -91,4 +93,4 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 End license text.
-```
+</pre>
