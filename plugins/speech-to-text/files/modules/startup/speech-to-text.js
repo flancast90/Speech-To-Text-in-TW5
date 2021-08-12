@@ -28,6 +28,7 @@ exports.startup = function() {
 	var isLanguageChange = false;
 	var isContinuousListening = false;
 	var isRestartContinuousListening = false;
+	var isCommand = false;
 
 	var userCommandsList = [];
 	var userCommandsActionList = [];
@@ -94,6 +95,8 @@ exports.startup = function() {
 			// WE WANT TO CHANGE BUTTON COLOUR BACK TO BLACK HERE
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording");
+		} else if(isCommand) {
+			isCommand = false;
 		}
 	}
 
@@ -198,6 +201,7 @@ exports.startup = function() {
 								var commandKeyWordSubstring = slicedWikiWordChunk.substring(0,commandKeyWordLength);
 								var slicedCommandChunk = slicedWikiWordChunk.slice(commandKeyWordLength + 1);
 								if(commandKeyWordSubstring === keyWordsCommands[n]) {
+									isCommand = true;
 									if(reducedTranscriptChunk) {
 										reducedTranscriptChunk = reducedTranscriptChunk.replace(keyWordsOk[i] + " " + keyWordsWiki[k] + " " + keyWordsCommands[n],"");
 									}
