@@ -53,8 +53,11 @@ exports.startup = function() {
 		for(var i=0; i<tiddlerList.length; i++) {
 			var title = tiddlerList[i],
 				tiddlerFields = $tw.wiki.getTiddler(title).fields;
-			userCommandsList[i] = tiddlerFields["voice-command"] !== undefined ? tiddlerFields["voice-command"] : undefined;
-			userCommandsActionList[i] = tiddlerFields.text;
+			var userCommands = $tw.wiki.getTiddlerList(title,"voice-commands");
+			for(var k=0; k<userCommands.length; k++) {
+				userCommandsList[i + k] = userCommands[k];//tiddlerFields["voice-command"] !== undefined ? tiddlerFields["voice-command"] : undefined;
+				userCommandsActionList[i + k] = tiddlerFields.text;
+			}
 		}
 	};
 
@@ -190,7 +193,9 @@ exports.startup = function() {
 								var commandKeyWordSubstring = slicedWikiWordChunk.substring(0,commandKeyWordLength);
 								var slicedCommandChunk = slicedWikiWordChunk.slice(commandKeyWordLength + 1);
 								if(commandKeyWordSubstring === keyWordsCommands[n]) {
-									reducedTranscriptChunk = reducedTranscriptChunk.replace(keyWordsOk[i] + " " + keyWordsWiki[k] + " " + keyWordsCommands[n],"");
+									if(reducedTranscriptChunk) {
+										reducedTranscriptChunk = reducedTranscriptChunk.replace(keyWordsOk[i] + " " + keyWordsWiki[k] + " " + keyWordsCommands[n],"");
+									}
 									var replaceString = keyWordsOk[i] + " " + keyWordsWiki[k] + " " + keyWordsCommands[n];
 									reducedTranscriptChunk = executeTranscriptCommands(keyWordsCommands[n],slicedCommandChunk,replaceString);
 								}
