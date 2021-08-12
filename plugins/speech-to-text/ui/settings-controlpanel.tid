@@ -36,3 +36,12 @@ caption: Speech to Text
 	<option value="no">No</option>
 	<option value="yes">Yes</option>
 </$select>
+
+<hr>
+
+!!! Should the Speech Recognition change its language when the ~TiddlyWiki language setting changes?
+
+<$select tiddler="$:/config/speech-to-text/auto-change-language" field="text" default="no">
+	<option value="no">No</option>
+	<option value="yes">Yes</option>
+</$select>
