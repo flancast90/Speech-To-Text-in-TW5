@@ -26,6 +26,7 @@ exports.startup = function() {
 	var fullTranscript = "";
 	var transcriptCounter = 0;
 	var isLanguageChange = false;
+	var isContinuousListening = false;
 
 	var userCommandsList = [];
 	var userCommandsActionList = [];
@@ -95,7 +96,7 @@ exports.startup = function() {
 	}
 
 	recognition.onend = function() {
-		if(!isLanguageChange) {
+		if(!isLanguageChange && !isContinuousListening) {
 			isRecording = false;
 			transcriptCounter = 0;
 			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
@@ -116,9 +117,11 @@ exports.startup = function() {
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording");
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/transcript");
 		} else if(isLanguageChange) {
-			transcriptCounter = 0;
+			//transcriptCounter = 0;
 			recognition.start();
 			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}})
+		} else if(isContinuousListening) {
+			recognition.start();
 		}
 	}
 
@@ -224,6 +227,7 @@ exports.startup = function() {
 			if(!isRecording && recordingState) {
 				recognition.start();
 			} else if(isRecording) {
+				isContinuousListening = false;
 				recognition.stop();
 				isRecording = false;
 				//$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
@@ -239,11 +243,27 @@ exports.startup = function() {
 			userKeywordsOk = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","ok-keywords");
 			userKeywordsWiki = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","wiki-keywords");
 		}
+		if(changes["$:/config/speech-to-text/language"]) {
+			var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language");
+			if(lang) {
+				recognition.lang = lang;
+				isLanguageChange = true;
+				recognition.stop();
+			}
+		}
+		if(changes["$:/config/speech-to-text/continuous"]) {
+			isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
+		}
 	});
 
 	updateVoiceCommandLists(getVoiceCommandTiddlerList());
 	userKeywordsOk = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","ok-keywords");
 	userKeywordsWiki = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","wiki-keywords");
+	isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
+	var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language");
+	if(lang) {
+		recognition.lang = lang;
+	}
 };
 
 })();
