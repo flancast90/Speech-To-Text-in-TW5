@@ -239,11 +239,15 @@ exports.startup = function() {
 			if(!isRecording && recordingState) {
 				recognition.start();
 			} else if(isRecording && !recordingState) {
+				var hasBeenContinuouslyListening = isContinuousListening;
 				isContinuousListening = false;
 				recognition.stop();
 				isRecording = false;
 				//$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
 				$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
+				if(hasBeenContinuouslyListening) {
+					isContinuousListening = true;
+				}
 			}
 		}
 		var newList = getVoiceCommandTiddlerList();
