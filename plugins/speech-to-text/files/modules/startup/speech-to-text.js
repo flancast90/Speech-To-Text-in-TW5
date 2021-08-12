@@ -86,7 +86,7 @@ exports.startup = function() {
 	};
 
 	recognition.onspeechend = function() {
-		if(!isLanguageChange && !isCommand) {
+		if(!isLanguageChange && !isCommand && !isContinuousListening) {
 			isRecording = false;
 			// when user is done speaking
 			recognition.stop();
