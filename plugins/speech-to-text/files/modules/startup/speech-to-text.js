@@ -167,7 +167,6 @@ exports.startup = function() {
 			} else if(command === "stop listening" || command === "Stop listening") {
 				stopRecognizing = true;
 				fullTranscript = fullTranscript.replace(replaceString,"");
-				return reduceChunk;
 			} else if(userCommandsList.indexOf(command) !== -1) {
 				var index = userCommandsList.indexOf(command);
 				var action = userCommandsActionList[index];
