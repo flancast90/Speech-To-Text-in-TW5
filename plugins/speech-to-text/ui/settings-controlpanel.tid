@@ -19,7 +19,7 @@ caption: Speech to Text
 <$select tiddler="$:/config/speech-to-text/language" field="text" default="">
 	<$set name="bcpCodeList" value={{$:/plugins/flancast90/speech-to-text/utils/languages!!bcp-47-list}}>
 		<$list filter="[list[$:/plugins/flancast90/speech-to-text/utils/languages]]" variable="language">
-			<$set name="index" value={{{ [list[$:/plugins/flancast90/speech-to-text/utils/languages]] +[splitbefore<language>count[]] }}}>
+			<$set name="index" value={{{ [list[$:/plugins/flancast90/speech-to-text/utils/languages]] +[allbefore<language>] +[count[]add[1]] }}}>
 				<$set name="bcp-code" value={{{ [enlist<bcpCodeList>nth<index>] }}}>
 					<option value=<<bcp-code>>><<language>></option>
 				</$set>
