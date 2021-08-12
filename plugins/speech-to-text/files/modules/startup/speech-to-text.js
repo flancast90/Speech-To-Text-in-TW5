@@ -82,7 +82,7 @@ exports.startup = function() {
 	};
 
 	recognition.onspeechend = function() {
-		if(!isLanguageChange) {
+		if(!isLanguageChange && !isCommand) {
 			isRecording = false;
 			// when user is done speaking
 			recognition.stop();
@@ -123,6 +123,7 @@ exports.startup = function() {
 			recognition.start();
 			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}})
 		} else if(isContinuousListening) {
+			transcriptCounter = 0;
 			isRestartContinuousListening = true;
 			recognition.start();
 		}
