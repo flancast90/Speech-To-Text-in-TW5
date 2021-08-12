@@ -23,7 +23,7 @@ exports.startup = function() {
 		return;
 	}
 	// we can change this to "true" when user opts-in
-	var autochange_lang = false;
+	var autochangeLang = false;
 	
 	var isRecording = false;
 	var fullTranscript = "";
@@ -265,9 +265,14 @@ exports.startup = function() {
 		if(changes["$:/config/speech-to-text/continuous"]) {
 			isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
 		}
-		if((changes["$:/language"])&&(autochange_lang == true)) {
+		if(changes["$:/config/speech-to-text/auto-change-language"]) {
+			autochangeLang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/auto-change-language") === "yes";
+		}
+		if(changes["$:/language"] && autochangeLang === true) {
 			var TWlang = $tw.wiki.getTiddlerText("$:/language").replace("$:/languages/", "");
+			isLanguageChange = true;
 			recognition.lang = TWlang;
+			recognition.stop();
 		}
 	});
 
@@ -275,6 +280,7 @@ exports.startup = function() {
 	userKeywordsOk = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","ok-keywords");
 	userKeywordsWiki = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","wiki-keywords");
 	isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
+	autochangeLang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/auto-change-language") === "yes";
 	var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
 	if(lang && lang !== recognition.lang) {
 		recognition.lang = lang;
