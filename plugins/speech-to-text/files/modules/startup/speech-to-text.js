@@ -28,6 +28,10 @@ exports.startup = function() {
 	var fullTranscript = "";
 	var transcriptCounter = 0;
 	var isLanguageChange = false;
+
+	var userCommandsList = [];
+	var userCommandsActionList = [];
+
 	// required for API to initialise
 	var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 
@@ -37,6 +41,21 @@ exports.startup = function() {
 	recognition.continuous = true;
 	// WE SHOULDN'T SET THE LANGUAGE BY DEFAULT
 	//recognition.lang = 'en-US';
+
+
+	var getVoiceCommandTiddlerList = function() {
+		return $tw.wiki.getTiddlersWithTag("$:/tags/VoiceCommand");
+	};
+
+	var updateVoiceCommandLists = function(tiddlerList) {
+		var voiceCommandTiddlers = tiddlerList;
+		for(var i=0; i<tiddlerList.length; i++) {
+			var title = tiddlerList[i],
+				tiddlerFields = $tw.wiki.getTiddler(title).fields;
+			userCommandsList[i] = tiddlerFields["voice-command"] !== undefined ? tiddlerFields["voice-command"] : undefined;
+			userCommandsActionList[i] = tiddlerFields.text;
+		}
+	};
 
 	// This runs when the speech recognition service starts
 	recognition.onstart = function() {
@@ -117,10 +136,14 @@ exports.startup = function() {
 		var keyWordsWiki = ["Wiki","wiki","Wikis","wikis","Vicky","vicky","Vichi","vichi","Vicchi","vicchi","WC","Wc","wc","Vichy","vichy","Witchy","witchy","VC","vc","Vecchi","vecchi"];
 		var keyWordsCommands = ["switch language to", "Switch language to", "stop listening", "Stop listening"];
 
+		keyWordsCommands = keyWordsCommands.concat(userCommandsList);
+		console.log(keyWordsCommands);
+
 		var languageNames = ["africaans", "indonesian", "malaysian", "catalonian", "german", "english", "spanish", "basque", "french", "croatian", "icelandic", "italian", "hungarian", "netherlandic", "norwegian", "polish", "portuguese", "romanian", "slavic", "finish", "finnish", "swedish", "turkish", "bulgarian", "russian", "serbian", "korean", "chinese", "japanese", "persian", "latin"];
 		var languageIdentifiers = ["af-ZA", "id-ID", "ms-MY", "ca-ES", "de-DE", "en-US", "es-ES", "eu-ES", "fr-FR", "hr-HR", "is-IS", "it-IT", "hu-HU", "nl-NL", "nb-NO", "pl-PL", "pt-PT", "ro-RO", "sk-SK", "fi-FI", "fi-FI", "sv-SE", "tr-TR", "bg-BG", "ru-RU", "sr-RS", "ko-KR", "cmn-Hans-CN", "ja-JP", "fa-IR", "la"];
 
-		var executeTranscriptCommands = function(command,chunk,reduceChunk,replaceString) {
+		var executeTranscriptCommands = function(command,chunk,replaceString) {
+			console.log(command);
 			if(command === "switch language to" || command === "Switch language to") {
 				var language = chunk.split(" ")[0];
 				var userSpecifiedLanguage = languageNames.indexOf(language.toLowerCase());
@@ -134,11 +157,15 @@ exports.startup = function() {
 					recognition.stop();
 					fullTranscript = fullTranscript.replace(replaceString + " " + language,"");
 				}
-				return reduceChunk.replace(language,"");
 			} else if(command === "stop listening" || command === "Stop listening") {
 				stopRecognizing = true;
 				fullTranscript = fullTranscript.replace(replaceString,"");
 				return reduceChunk;
+			} else if(userCommandsList.indexOf(command) !== -1) {
+				var index = userCommandsList.indexOf(command);
+				var action = userCommandsActionList[index];
+				fullTranscript = fullTranscript.replace(replaceString,"");
+				$tw.rootWidget.invokeActionString(action);
 			}
 		};
 
@@ -159,7 +186,7 @@ exports.startup = function() {
 								if(commandKeyWordSubstring === keyWordsCommands[n]) {
 									reducedTranscriptChunk = reducedTranscriptChunk.replace(keyWordsOk[i] + " " + keyWordsWiki[k] + " " + keyWordsCommands[n],"");
 									var replaceString = keyWordsOk[i] + " " + keyWordsWiki[k] + " " + keyWordsCommands[n];
-									reducedTranscriptChunk = executeTranscriptCommands(keyWordsCommands[n],slicedCommandChunk,reducedTranscriptChunk,replaceString);
+									reducedTranscriptChunk = executeTranscriptCommands(keyWordsCommands[n],slicedCommandChunk,replaceString);
 								}
 							}
 							for(var m=0; m<keyWordsOk.length; m++) {
@@ -194,7 +221,14 @@ exports.startup = function() {
 				$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
 			}
 		}
+		var newList = getVoiceCommandTiddlerList();
+		var hasChanged = $tw.utils.hopArray(changes,newList);
+		if(hasChanged) {
+			updateVoiceCommandLists(newList);
+		}
 	});
+
+	updateVoiceCommandLists(getVoiceCommandTiddlerList());
 };
 
 })();
