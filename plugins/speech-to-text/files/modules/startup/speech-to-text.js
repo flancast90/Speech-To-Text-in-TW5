@@ -234,7 +234,7 @@ exports.startup = function() {
 			var recordingState = $tw.wiki.getTiddlerText("$:/state/speech-to-text/recording") === "yes";
 			if(!isRecording && recordingState) {
 				recognition.start();
-			} else if(isRecording) {
+			} else if(isRecording && !recordingState) {
 				isContinuousListening = false;
 				recognition.stop();
 				isRecording = false;
