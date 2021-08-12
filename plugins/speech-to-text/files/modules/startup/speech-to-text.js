@@ -22,8 +22,6 @@ exports.startup = function() {
 	if(!window.SpeechRecognition && !window.webkitSpeechRecognition) {
 		return;
 	}
-	//default is English, but user can change via speech-commands later
-
 	var isRecording = false;
 	var fullTranscript = "";
 	var transcriptCounter = 0;
@@ -31,6 +29,9 @@ exports.startup = function() {
 
 	var userCommandsList = [];
 	var userCommandsActionList = [];
+
+	var userKeywordsOk,
+		userKeywordsWiki;
 
 	// required for API to initialise
 	var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
@@ -40,8 +41,8 @@ exports.startup = function() {
 	var recognition = new SpeechRecognition();
 	recognition.continuous = true;
 	// WE SHOULDN'T SET THE LANGUAGE BY DEFAULT
+	// default is what the HTML 'lang' attribute defines or what the user system defines
 	//recognition.lang = 'en-US';
-
 
 	var getVoiceCommandTiddlerList = function() {
 		return $tw.wiki.getTiddlersWithTag("$:/tags/VoiceCommand");
@@ -134,6 +135,12 @@ exports.startup = function() {
 
 		var keyWordsOk = ["OK","ok","Ok","Okay","okay","Oké","oké"];
 		var keyWordsWiki = ["Wiki","wiki","Wikis","wikis","Vicky","vicky","Vichi","vichi","Vicchi","vicchi","WC","Wc","wc","Vichy","vichy","Witchy","witchy","VC","vc","Vecchi","vecchi"];
+		if(userKeywordsOk.length > 0) {
+			keyWordsOk = keyWordsOk.concat(userKeywordsOk);
+		}
+		if(userKeywordsWiki.length > 0) {
+			keyWordsWiki = keyWordsWiki.concat(userKeywordsWiki);
+		}
 		var keyWordsCommands = ["switch language to", "Switch language to", "stop listening", "Stop listening"];
 
 		keyWordsCommands = keyWordsCommands.concat(userCommandsList);
@@ -226,9 +233,15 @@ exports.startup = function() {
 		if(hasChanged) {
 			updateVoiceCommandLists(newList);
 		}
+		if(changes["$:/config/speech-to-text/keywords"]) {
+			userKeywordsOk = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","ok-keywords");
+			userKeywordsWiki = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","wiki-keywords");
+		}
 	});
 
 	updateVoiceCommandLists(getVoiceCommandTiddlerList());
+	userKeywordsOk = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","ok-keywords");
+	userKeywordsWiki = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","wiki-keywords");
 };
 
 })();
