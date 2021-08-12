@@ -117,7 +117,7 @@ exports.startup = function() {
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording");
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/transcript");
 		} else if(isLanguageChange) {
-			//transcriptCounter = 0;
+			transcriptCounter = 0;
 			recognition.start();
 			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}})
 		} else if(isContinuousListening) {
