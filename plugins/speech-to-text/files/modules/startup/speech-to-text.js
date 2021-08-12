@@ -179,6 +179,7 @@ exports.startup = function() {
 					fullTranscript = fullTranscript.replace(replaceString + " " + language,"");
 				}
 			} else if(command.toLowerCase() === "stop listening") {
+				isContinuousListening = false;
 				stopRecognizing = true;
 				fullTranscript = fullTranscript.replace(replaceString,"");
 			} else if(userCommandsList.indexOf(command) !== -1) {
