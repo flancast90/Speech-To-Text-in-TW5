@@ -31,6 +31,7 @@ exports.startup = function() {
 	var isLanguageChange = false;
 	var isContinuousListening = false;
 	var isRestartContinuousListening = false;
+	var isUserLanguageChange = false;
 	var isCommand = false;
 
 	var userCommandsList = [];
@@ -79,6 +80,9 @@ exports.startup = function() {
 			// do something when recording starts
 			
 			$tw.wiki.setText("$:/state/speech-to-text/recording/ongoing","text",undefined,"yes");
+		} else if(isUserLanguageChange) {
+			$tw.wiki.setText("$:/state/speech-to-text/recording/ongoing","text",undefined,"yes");
+			isUserLanguageChange = false;
 		} else {
 			isRestartContinuousListening = false;
 			isLanguageChange = false;
@@ -124,7 +128,7 @@ exports.startup = function() {
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording");
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/transcript");
-		} else if(isLanguageChange) {
+		} else if(isLanguageChange && !isContinuousListening) {
 			transcriptCounter = 0;
 			recognition.start();
 			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}})
@@ -264,6 +268,7 @@ exports.startup = function() {
 			if(lang && lang !== recognition.lang) {
 				recognition.lang = lang;
 				isLanguageChange = true;
+				isUserLanguageChange = true;
 				recognition.stop();
 			}
 		}
