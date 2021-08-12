@@ -155,7 +155,7 @@ exports.startup = function() {
 		var languageIdentifiers = ["af-ZA", "id-ID", "ms-MY", "ca-ES", "de-DE", "en-US", "es-ES", "eu-ES", "fr-FR", "hr-HR", "is-IS", "it-IT", "hu-HU", "nl-NL", "nb-NO", "pl-PL", "pt-PT", "ro-RO", "sk-SK", "fi-FI", "fi-FI", "sv-SE", "tr-TR", "bg-BG", "ru-RU", "sr-RS", "ko-KR", "cmn-Hans-CN", "ja-JP", "fa-IR", "la"];
 
 		var executeTranscriptCommands = function(command,chunk,replaceString) {
-			if(command === "switch language to" || command === "Switch language to") {
+			if(command.toLowerCase() === "switch language to") {
 				var language = chunk.split(" ")[0];
 				var userSpecifiedLanguage = languageNames.indexOf(language.toLowerCase());
 				if (userSpecifiedLanguage === -1) {
@@ -168,7 +168,7 @@ exports.startup = function() {
 					recognition.stop();
 					fullTranscript = fullTranscript.replace(replaceString + " " + language,"");
 				}
-			} else if(command === "stop listening" || command === "Stop listening") {
+			} else if(command.toLowerCase() === "stop listening") {
 				stopRecognizing = true;
 				fullTranscript = fullTranscript.replace(replaceString,"");
 			} else if(userCommandsList.indexOf(command) !== -1) {
