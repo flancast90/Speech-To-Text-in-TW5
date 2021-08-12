@@ -147,13 +147,11 @@ exports.startup = function() {
 		var keyWordsCommands = ["switch language to", "Switch language to", "stop listening", "Stop listening"];
 
 		keyWordsCommands = keyWordsCommands.concat(userCommandsList);
-		console.log(keyWordsCommands);
 
 		var languageNames = ["africaans", "indonesian", "malaysian", "catalonian", "german", "english", "spanish", "basque", "french", "croatian", "icelandic", "italian", "hungarian", "netherlandic", "norwegian", "polish", "portuguese", "romanian", "slavic", "finish", "finnish", "swedish", "turkish", "bulgarian", "russian", "serbian", "korean", "chinese", "japanese", "persian", "latin"];
 		var languageIdentifiers = ["af-ZA", "id-ID", "ms-MY", "ca-ES", "de-DE", "en-US", "es-ES", "eu-ES", "fr-FR", "hr-HR", "is-IS", "it-IT", "hu-HU", "nl-NL", "nb-NO", "pl-PL", "pt-PT", "ro-RO", "sk-SK", "fi-FI", "fi-FI", "sv-SE", "tr-TR", "bg-BG", "ru-RU", "sr-RS", "ko-KR", "cmn-Hans-CN", "ja-JP", "fa-IR", "la"];
 
 		var executeTranscriptCommands = function(command,chunk,replaceString) {
-			console.log(command);
 			if(command === "switch language to" || command === "Switch language to") {
 				var language = chunk.split(" ")[0];
 				var userSpecifiedLanguage = languageNames.indexOf(language.toLowerCase());
