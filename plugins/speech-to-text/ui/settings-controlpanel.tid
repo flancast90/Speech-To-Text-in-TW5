@@ -1,0 +1,21 @@
+title: $:/plugins/flancast90/speech-to-text/ui/ControlPanel/settings
+tags: $:/tags/ControlPanel
+caption: Speech to Text
+
+!!! Choose your aliases for `Ok Wiki`
+
+!!!! Aliases for ''Ok'' (as a list):
+
+<$edit-text tiddler="$:/config/speech-to-text/keywords" field="ok-keywords" default="" tag="input" placeholder="ok-keywords list"/>
+
+!!!! Aliases for ''Wiki'' (as a list):
+
+<$edit-text tiddler="$:/config/speech-to-text/keywords" field="wiki-keywords" default="" tag="input" placeholder="wiki-keywords list"/>
+
+<hr>
+
+!!! Choose your language for speech-recognition
+
+<$select tiddler="$:/config/speech-to-text/language" field="text" default="">
+	<option value="de-DE">German</option>
+</$select>
