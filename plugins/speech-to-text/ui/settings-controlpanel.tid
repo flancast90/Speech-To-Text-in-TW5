@@ -19,3 +19,12 @@ caption: Speech to Text
 <$select tiddler="$:/config/speech-to-text/language" field="text" default="">
 	<option value="de-DE">German</option>
 </$select>
+
+<hr>
+
+!!! Should the Speech Recognition listen continuously until you stop it manually or by voice command?
+
+<$select tiddler="$:/config/speech-to-text/continuous" field="text" default="no">
+	<option value="no">No</option>
+	<option value="yes">Yes</option>
+</$select>
