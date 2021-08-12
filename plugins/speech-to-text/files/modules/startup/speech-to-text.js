@@ -27,6 +27,7 @@ exports.startup = function() {
 	var transcriptCounter = 0;
 	var isLanguageChange = false;
 	var isContinuousListening = false;
+	var isRestartContinuousListening = false;
 
 	var userCommandsList = [];
 	var userCommandsActionList = [];
@@ -68,13 +69,14 @@ exports.startup = function() {
 		// What is the best way to alert the user of 
 		// Mic recording? Put either dropdown, alert, etc.
 		// here for that functionality.
-		if(!isLanguageChange) {
+		if(!isLanguageChange && !isRestartContinuousListening) {
 			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-started");
 
 			// do something when recording starts
 			
 			$tw.wiki.setText("$:/state/speech-to-text/recording/ongoing","text",undefined,"yes");
 		} else {
+			isRestartContinuousListening = false;
 			isLanguageChange = false;
 		}
 	};
@@ -121,6 +123,7 @@ exports.startup = function() {
 			recognition.start();
 			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}})
 		} else if(isContinuousListening) {
+			isRestartContinuousListening = true;
 			recognition.start();
 		}
 	}
