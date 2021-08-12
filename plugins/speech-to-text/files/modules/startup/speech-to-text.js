@@ -244,7 +244,7 @@ exports.startup = function() {
 			userKeywordsWiki = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","wiki-keywords");
 		}
 		if(changes["$:/config/speech-to-text/language"]) {
-			var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language");
+			var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
 			if(lang) {
 				recognition.lang = lang;
 				isLanguageChange = true;
@@ -260,7 +260,7 @@ exports.startup = function() {
 	userKeywordsOk = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","ok-keywords");
 	userKeywordsWiki = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","wiki-keywords");
 	isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
-	var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language");
+	var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
 	if(lang) {
 		recognition.lang = lang;
 	}
