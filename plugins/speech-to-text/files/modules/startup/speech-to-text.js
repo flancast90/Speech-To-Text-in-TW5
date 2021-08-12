@@ -22,6 +22,9 @@ exports.startup = function() {
 	if(!window.SpeechRecognition && !window.webkitSpeechRecognition) {
 		return;
 	}
+	// we can change this to "true" when user opts-in
+	var autochange_lang = false;
+	
 	var isRecording = false;
 	var fullTranscript = "";
 	var transcriptCounter = 0;
@@ -261,6 +264,10 @@ exports.startup = function() {
 		}
 		if(changes["$:/config/speech-to-text/continuous"]) {
 			isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
+		}
+		if((changes["$:/language"])&&(autochange_lang == true)) {
+			var TWlang = $tw.wiki.getTiddlerText("$:/language").replace("$:/languages/", "");
+			recognition.lang = TWlang;
 		}
 	});
 
