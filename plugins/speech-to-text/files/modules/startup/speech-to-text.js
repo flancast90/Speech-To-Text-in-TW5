@@ -48,6 +48,8 @@ exports.startup = function() {
 	// a solid indicator of what they do.
 	var recognition = new SpeechRecognition();
 	recognition.continuous = true;
+	// interimResults: BAD IDEA
+	//recognition.interimResults = true;
 	// WE SHOULDN'T SET THE LANGUAGE BY DEFAULT
 	// default is what the HTML 'lang' attribute defines or what the user system defines
 	//recognition.lang = 'en-US';
@@ -131,8 +133,15 @@ exports.startup = function() {
 	}
 
 	recognition.onresult = function(event) {
-		var transcript = event.results[transcriptCounter][0].transcript;
-		var confidence = event.results[transcriptCounter][0].confidence;
+		var transcript;
+		var confidence;
+		if(recognition.interimResults) {
+			transcript = event.results[0][0].transcript;
+			confidence = event.results[0][0].confidence;
+		} else {
+			transcript = event.results[transcriptCounter][0].transcript;
+			confidence = event.results[transcriptCounter][0].confidence;	
+		}
 		var stopRecognizing = false;
 
 		if(transcriptCounter === 0) {
