@@ -240,6 +240,8 @@ exports.startup = function() {
 			if(!isRecording && recordingState) {
 				if(autochangeLang) {
 					recognition.lang = $tw.wiki.getTiddlerText("$:/language").replace("$:/languages/", "");
+				} else {
+					recognition.lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
 				}
 				isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
 				recognition.start();
