@@ -1,0 +1,5 @@
+title: $:/plugins/flancast90/speech-to-text/StartupActions
+tags: $:/tags/StartupAction
+
+<$action-deletetiddler $tiddler="$:/state/speech-to-text/recording"/>
+<$action-deletetiddler $tiddler="$:/state/speech-to-text/recording/ongoing"/>
