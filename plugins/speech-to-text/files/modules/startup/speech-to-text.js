@@ -268,6 +268,8 @@ exports.startup = function() {
 					isLanguageChange = true;
 					isUserLanguageChange = true;
 					recognition.stop();
+				} else {
+					$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}})
 				}
 			}
 		}
@@ -283,6 +285,8 @@ exports.startup = function() {
 			if(isRecording) {
 				isLanguageChange = true;
 				recognition.stop();
+			} else {
+				$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}})
 			}
 		}
 	});
