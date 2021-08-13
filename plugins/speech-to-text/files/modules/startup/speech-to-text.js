@@ -238,6 +238,9 @@ exports.startup = function() {
 		if(changes["$:/state/speech-to-text/recording"]) {
 			var recordingState = $tw.wiki.getTiddlerText("$:/state/speech-to-text/recording") === "yes";
 			if(!isRecording && recordingState) {
+				if(autochangeLang) {
+					recognition.lang = $tw.wiki.getTiddlerText("$:/language").replace("$:/languages/", "");
+				}
 				isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
 				recognition.start();
 			} else if(isRecording && !recordingState) {
