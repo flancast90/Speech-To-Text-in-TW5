@@ -251,9 +251,11 @@ exports.startup = function() {
 			var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
 			if(lang && lang !== recognition.lang) {
 				recognition.lang = lang;
-				isLanguageChange = true;
-				isUserLanguageChange = true;
-				recognition.stop();
+				if(isRecording) {
+					isLanguageChange = true;
+					isUserLanguageChange = true;
+					recognition.stop();
+				}
 			}
 		}
 		if(changes["$:/config/speech-to-text/continuous"]) {
