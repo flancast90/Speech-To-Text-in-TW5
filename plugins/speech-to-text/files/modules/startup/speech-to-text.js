@@ -276,9 +276,11 @@ exports.startup = function() {
 		}
 		if(changes["$:/language"] && autochangeLang === true) {
 			var tiddlyWikiLanguage = $tw.wiki.getTiddlerText("$:/language").replace("$:/languages/", "");
-			isLanguageChange = true;
 			recognition.lang = tiddlyWikiLanguage;
-			recognition.stop();
+			if(isRecording) {
+				isLanguageChange = true;
+				recognition.stop();
+			}
 		}
 	});
 
