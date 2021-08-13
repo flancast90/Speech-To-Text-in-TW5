@@ -72,14 +72,8 @@ exports.startup = function() {
 	// This runs when the speech recognition service starts
 	recognition.onstart = function() {
 		isRecording = true;
-		// What is the best way to alert the user of 
-		// Mic recording? Put either dropdown, alert, etc.
-		// here for that functionality.
 		if(!isLanguageChange && !isRestartContinuousListening) {
 			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-started");
-
-			// do something when recording starts
-			
 			$tw.wiki.setText("$:/state/speech-to-text/recording/ongoing","text",undefined,"yes");
 		} else if(isUserLanguageChange) {
 			$tw.wiki.setText("$:/state/speech-to-text/recording/ongoing","text",undefined,"yes");
@@ -93,14 +87,7 @@ exports.startup = function() {
 	recognition.onspeechend = function() {
 		if(!isLanguageChange && !isCommand && !isContinuousListening) {
 			isRecording = false;
-			// when user is done speaking
 			recognition.stop();
-
-			// What is the best way to alert the user of 
-			// Mic-stopped recording? Use that method here.
-			//$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
-			
-			// WE WANT TO CHANGE BUTTON COLOUR BACK TO BLACK HERE
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording");
 		} else if(isCommand) {
@@ -153,9 +140,6 @@ exports.startup = function() {
 		}
 
 		fullTranscript = fullTranscript + transcript;
-
-		//var transcriptChunk;
-		// WE CAN ADD COMMANDS IN THE BELOW IF STATEMENT, AS WELL AS WHAT THEY SHOULD DO.
 
 		var keyWordsOk = ["OK","ok","Ok","Okay","okay","Oké","oké"];
 		var keyWordsWiki = ["Wiki","wiki","Wikis","wikis","Vicky","vicky","Vichi","vichi","Vicchi","vicchi","WC","Wc","wc","Vichy","vichy","Witchy","witchy","VC","vc","Vecchi","vecchi"];
@@ -251,7 +235,6 @@ exports.startup = function() {
 				isContinuousListening = false;
 				recognition.stop();
 				isRecording = false;
-				//$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
 				$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
 			}
 		}
@@ -280,9 +263,9 @@ exports.startup = function() {
 			autochangeLang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/auto-change-language") === "yes";
 		}
 		if(changes["$:/language"] && autochangeLang === true) {
-			var TWlang = $tw.wiki.getTiddlerText("$:/language").replace("$:/languages/", "");
+			var tiddlyWikiLanguage = $tw.wiki.getTiddlerText("$:/language").replace("$:/languages/", "");
 			isLanguageChange = true;
-			recognition.lang = TWlang;
+			recognition.lang = tiddlyWikiLanguage;
 			recognition.stop();
 		}
 	});
