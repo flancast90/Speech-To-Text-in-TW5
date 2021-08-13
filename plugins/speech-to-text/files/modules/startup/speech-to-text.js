@@ -65,7 +65,7 @@ exports.startup = function() {
 				tiddlerFields = $tw.wiki.getTiddler(title).fields;
 			var userCommands = $tw.wiki.getTiddlerList(title,"voice-commands");
 			for(var k=0; k<userCommands.length; k++) {
-				userCommandsList[i + k] = userCommands[k];//tiddlerFields["voice-command"] !== undefined ? tiddlerFields["voice-command"] : undefined;
+				userCommandsList[i + k] = userCommands[k];
 				userCommandsActionList[i + k] = tiddlerFields.text;
 			}
 		}
@@ -228,8 +228,10 @@ exports.startup = function() {
 		getTranscriptCommands(fullTranscript);
 
 		transcriptCounter += 1;
-		$tw.wiki.setText("$:/state/speech-to-text/transcript","text",undefined,fullTranscript);
+		//$tw.wiki.setText("$:/state/speech-to-text/transcript","text",undefined,fullTranscript);
 		if(stopRecognizing) {
+			isLanguageChange = false;
+			isContinuousListening = false;
 			recognition.stop();
 		}
 	};
