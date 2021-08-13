@@ -171,21 +171,13 @@ exports.startup = function() {
 				var userSpecifiedLanguage = languageNames.indexOf(language.toLowerCase());
 				if (userSpecifiedLanguage === -1) {
 					isLanguageChange = false;
-					if(transcriptCounter === 0) {
-						fullTranscript = fullTranscript.replace(replaceString + " " + language,"");
-					} else {
-						fullTranscript = fullTranscript.replace(" " + replaceString + " " + language,"");
-					}
+					fullTranscript = fullTranscript.replace(replaceString + " " + language,"");
 					$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/error-finding-lang",{variables:{language:language}});
 				} else {
 					recognition.lang = languageIdentifiers[userSpecifiedLanguage];
-					isLanguageChange = true;
+					isLanguageChange = true
 					recognition.stop();
-					if(transcriptCounter === 0) {
-						fullTranscript = fullTranscript.replace(replaceString + " " + language,"");
-					} else {
-						fullTranscript = fullTranscript.replace(" " + replaceString + " " + language,"");
-					}
+					fullTranscript = fullTranscript.replace(replaceString + " " + language,"");
 				}
 			} else if(command.toLowerCase() === "stop listening") {
 				isContinuousListening = false;
@@ -194,11 +186,7 @@ exports.startup = function() {
 			} else if(userCommandsList.indexOf(command) !== -1) {
 				var index = userCommandsList.indexOf(command);
 				var action = userCommandsActionList[index];
-				if(transcriptCounter === 0) {
-					fullTranscript = fullTranscript.replace(replaceString,"");
-				} else {
-					fullTranscript = fullTranscript.replace(" " + replaceString,"");
-				}
+				fullTranscript = fullTranscript.replace(replaceString,"");
 				$tw.rootWidget.invokeActionString(action);
 			}
 		};
