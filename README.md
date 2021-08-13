@@ -95,7 +95,7 @@ To test it out, follow the install instructions above, or just test out a demo v
 
 **Stopping the Plugin from Recording**
 
-To stop the plugin, you can click the Mic icon on the wiki sidebar again, or, since >= v1.0.4, you can say "Ok Wiki, stop talking". You will get a message that the "Recording Stopped", and the transcript will be added to a new Tiddler (see image).
+To stop the plugin, you can click the Mic icon on the wiki sidebar again, or, since >= v1.0.4, you can say "Ok Wiki, stop listening". You will get a message that the "Recording Stopped", and the transcript will be added to a new Tiddler (see image).
 
 ![Recording stopped](https://i.imgur.com/XMqO2ud.png)
 
@@ -105,7 +105,7 @@ To stop the plugin, you can click the Mic icon on the wiki sidebar again, or, si
 
 Since version 1.0.4, Speech-to-Text-for-TW5 has supported some kind of verbal command. These are keywords/phrases that can be spoken into the Mic when the plugin is running, to complete some action. 
 
-For example, by saying "Ok wiki, stop talking", you can end the listening, the same action that would be taken by clicking the Mic button again. v1.0.5 or 1.0.6, when released, will most likely contain user-defined custom commands, which will be added to the documentation when applicable.
+For example, by saying "Ok wiki, stop listening", you can end the listening, the same action that would be taken by clicking the Mic button again. v1.0.5 or 1.0.6, when released, will most likely contain user-defined custom commands, which will be added to the documentation when applicable.
 
 It should be noted that the verbal commands are not perfect: the plugin can always misunderstand a word, which will lead to commands not being recognized. At this time, the devs are working on a Dictionary of "sound-alike" words, so that even if the command is misunderstood, it has a higher chance of being recognized. You can help in this effort by logging failed commands, and the word that was misunderstood, and then sending this information to the devs in the form of a [New Issue](https://github.com/flancast90/Speech-To-Text-in-TW5/issues/new). 
 Thank You!
