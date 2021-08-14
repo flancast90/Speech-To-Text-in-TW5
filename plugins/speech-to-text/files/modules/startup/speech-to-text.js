@@ -60,6 +60,8 @@ exports.startup = function() {
 	};
 
 	var updateVoiceCommandLists = function(tiddlerList) {
+		userCommandsList = [];
+		userCommandsActionList = [];
 		for(var i=0; i<tiddlerList.length; i++) {
 			var title = tiddlerList[i],
 				tiddlerFields = $tw.wiki.getTiddler(title).fields;
