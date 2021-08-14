@@ -173,28 +173,27 @@ exports.startup = function() {
 				var userSpecifiedLanguage = languageNames.indexOf(language.toLowerCase());
 				if (userSpecifiedLanguage === -1) {
 					isLanguageChange = false;
-					fullTranscript = fullTranscript.replace(replaceString + " " + language,"");
+					fullTranscript = fullTranscript.replace(new RegExp(replaceString + "(\\s+?)*" + language),"");
 					$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/error-finding-lang",{variables:{language:language}});
 				} else {
 					recognition.lang = languageIdentifiers[userSpecifiedLanguage];
 					isLanguageChange = true
 					recognition.stop();
-					fullTranscript = fullTranscript.replace(replaceString + " " + language,"");
+					fullTranscript = fullTranscript.replace(new RegExp(replaceString + "(\\s+?)*" + language),"");
 				}
 			} else if(command.toLowerCase() === "stop listening") {
 				isContinuousListening = false;
 				stopRecognizing = true;
-				fullTranscript = fullTranscript.replace(replaceString,"");
+				fullTranscript = fullTranscript.replace(new RegExp(replaceString),"");
 			} else if(userCommandsList.indexOf(command) !== -1) {
 				var index = userCommandsList.indexOf(command);
 				var action = userCommandsActionList[index];
-				fullTranscript = fullTranscript.replace(replaceString,"");
+				fullTranscript = fullTranscript.replace(new RegExp(replaceString),"");
 				$tw.rootWidget.invokeActionString(action);
 			}
 		};
 
 		var getTranscriptCommands = function(transcriptChunk) {
-			var reducedTranscriptChunk = transcriptChunk;
 			for(var i=0; i<keyWordsOk.length; i++) {
 				if(transcriptChunk.includes(keyWordsOk[i])) {
 					var okKeyWordLength = keyWordsOk[i].length;
@@ -203,17 +202,16 @@ exports.startup = function() {
 						if(slicedChunk.indexOf(keyWordsWiki[k]) !== -1) {
 							var wikiKeyWordLength = keyWordsWiki[k].length;
 							var slicedWikiWordChunk = slicedChunk.slice(wikiKeyWordLength + 1);
+							slicedWikiWordChunk = slicedWikiWordChunk.replace(/\s+$/, '');
 							for(var n=0; n<keyWordsCommands.length; n++) {
 								var commandKeyWordLength = keyWordsCommands[n].length;
 								var commandKeyWordSubstring = slicedWikiWordChunk.substring(0,commandKeyWordLength);
 								var slicedCommandChunk = slicedWikiWordChunk.slice(commandKeyWordLength + 1);
+								slicedCommandChunk = slicedCommandChunk.replace(/\s+$/, '');
 								if(commandKeyWordSubstring === keyWordsCommands[n]) {
 									isCommand = true;
-									if(reducedTranscriptChunk) {
-										reducedTranscriptChunk = reducedTranscriptChunk.replace(keyWordsOk[i] + " " + keyWordsWiki[k] + " " + keyWordsCommands[n],"");
-									}
-									var replaceString = keyWordsOk[i] + " " + keyWordsWiki[k] + " " + keyWordsCommands[n];
-									reducedTranscriptChunk = executeTranscriptCommands(keyWordsCommands[n],slicedCommandChunk,replaceString);
+									var replaceString = keyWordsOk[i] + "(\\s+?)*" + keyWordsWiki[k] + "(\\s+?)*" + keyWordsCommands[n];
+									executeTranscriptCommands(keyWordsCommands[n],slicedCommandChunk,replaceString);
 								}
 							}
 							for(var m=0; m<keyWordsOk.length; m++) {
