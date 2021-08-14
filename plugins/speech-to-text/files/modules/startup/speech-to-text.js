@@ -28,6 +28,7 @@ exports.startup = function() {
 	var isRecording = false;
 	var fullTranscript = "";
 	var transcriptCounter = 0;
+	var fullTranscriptCounter = 0;
 	var isLanguageChange = false;
 	var isContinuousListening = false;
 	var isRestartContinuousListening = false;
@@ -101,6 +102,7 @@ exports.startup = function() {
 		if(!isLanguageChange && !isContinuousListening) {
 			isRecording = false;
 			transcriptCounter = 0;
+			fullTranscriptCounter = 0;
 			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/recording-stopped");
 
 			// WE WANT TO DISPLAY THE OUTPUT (saved in var transcript) IN TW5
@@ -144,7 +146,7 @@ exports.startup = function() {
 		}
 		var stopRecognizing = false;
 
-		if(transcriptCounter === 0) {
+		if(fullTranscriptCounter === 0) {
 			transcript = transcript.charAt(0).toUpperCase() + transcript.slice(1);
 		}
 
@@ -228,6 +230,7 @@ exports.startup = function() {
 		getTranscriptCommands(fullTranscript);
 
 		transcriptCounter += 1;
+		fullTranscriptCounter += 1;
 		//$tw.wiki.setText("$:/state/speech-to-text/transcript","text",undefined,fullTranscript);
 		if(stopRecognizing) {
 			isLanguageChange = false;
