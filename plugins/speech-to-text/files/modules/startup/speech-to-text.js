@@ -144,7 +144,6 @@ exports.startup = function() {
 		}
 
 		fullTranscript = fullTranscript + transcript;
-		var strippedDownTranscript = fullTranscript;
 
 		var keyWordsOk = ["OK","ok","Ok","Okay","okay","Oké","oké"];
 		var keyWordsWiki = ["Wiki","wiki","Wikis","wikis","Vicky","vicky","Vichi","vichi","Vicchi","vicchi","WC","Wc","wc","Vichy","vichy","Witchy","witchy","VC","vc","Vecchi","vecchi"];
@@ -168,25 +167,21 @@ exports.startup = function() {
 				if (userSpecifiedLanguage === -1) {
 					isLanguageChange = false;
 					fullTranscript = fullTranscript.replace(new RegExp(replaceString + "(\\s+?)*" + language),"");
-					strippedDownTranscript = strippedDownTranscript.replace(new RegExp(".*" + replaceString + "(\\s+?)*" + language),"");
 					$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/error-finding-lang",{variables:{language:language}});
 				} else {
 					recognition.lang = languageIdentifiers[userSpecifiedLanguage];
 					isLanguageChangeLanguage = languageIdentifiers[userSpecifiedLanguage];
 					isLanguageChange = true
 					recognition.stop();
-					strippedDownTranscript = strippedDownTranscript.replace(new RegExp(".*" + replaceString + "(\\s+?)*" + language),"");
 					fullTranscript = fullTranscript.replace(new RegExp(replaceString + "(\\s+?)*" + language),"");
 				}
 			} else if(command.toLowerCase() === "stop listening") {
 				isContinuousListening = false;
 				stopRecognizing = true;
-				strippedDownTranscript = strippedDownTranscript.replace(new RegExp(".*" + replaceString),"");
 				fullTranscript = fullTranscript.replace(new RegExp(replaceString),"");
 			} else if(userCommandsList.indexOf(command) !== -1) {
 				var index = userCommandsList.indexOf(command);
 				var action = userCommandsActionList[index];
-				strippedDownTranscript = strippedDownTranscript.replace(new RegExp(".*" + replaceString),"");
 				fullTranscript = fullTranscript.replace(new RegExp(replaceString),"");
 				$tw.rootWidget.invokeActionString(action);
 			}
@@ -217,8 +212,8 @@ exports.startup = function() {
 								}
 							}
 							for(var m=0; m<keyWordsOk.length; m++) {
-								if(strippedDownTranscript.includes(keyWordsOk[m])) {
-									getTranscriptCommands(strippedDownTranscript);
+								if(slicedWikiWordChunk.includes(keyWordsOk[m])) {
+									getTranscriptCommands(slicedWikiWordChunk);
 								}
 							}
 						}
