@@ -108,7 +108,7 @@ exports.startup = function() {
 			var modificationFields = $tw.wiki.getModificationFields();
 			var title = $tw.wiki.generateNewTitle("New Transcript");
 			if(fullTranscript && fullTranscript.replace(/\s+$/, '') !== "") {
-				$tw.wiki.addTiddler(new $tw.Tiddler(creationFields,modificationFields,{ title: title, text: fullTranscript.replace(/\s+$/, '') }));
+				$tw.wiki.addTiddler(new $tw.Tiddler(creationFields,modificationFields,{ title: title, text: fullTranscript.replace(/\s+$/, '').replace(/\s+/g, " ") }));
 				$tw.rootWidget.invokeActionString('<$navigator story="$:/StoryList" history="$:/HistoryList"><$action-sendmessage $message="tm-edit-tiddler" $param="' + title + '"/></$navigator>');
 			}
 			
