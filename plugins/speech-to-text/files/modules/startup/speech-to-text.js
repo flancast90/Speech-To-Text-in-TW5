@@ -215,14 +215,14 @@ exports.startup = function() {
 			console.log(transcriptChunk);
 			var okKeyWordLength = okKeyWord.length;
 			var slicedChunk = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "");
-			commandsTranscript = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "");
+			//commandsTranscript = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "");
 			console.log(slicedChunk);
 			for(var k=0; k<keyWordsWiki.length; k++) {
 				if(slicedChunk.indexOf(keyWordsWiki[k]) !== -1) {
 					var wikiKeyWordLength = keyWordsWiki[k].length;
 					var slicedWikiWordChunk = slicedChunk.slice(wikiKeyWordLength);
 					slicedWikiWordChunk = slicedWikiWordChunk.replace(/^\s+/g, "");
-					commandsTranscript = commandsTranscript.slice(wikiKeyWordLength).replace(/^\s+/g, "");
+					//commandsTranscript = commandsTranscript.slice(wikiKeyWordLength).replace(/^\s+/g, "");
 					while(startsWithKeyword(slicedWikiWordChunk,keyWordsOk)) {
 						console.log("TRUE");
 						slicedWikiWordChunk = removeKeyWords(slicedWikiWordChunk,keyWordsOk).replace(/^\s+/g, "");
@@ -234,9 +234,10 @@ exports.startup = function() {
 							var commandKeyWordLength = keyWordsCommands[n].length;
 							var commandKeyWordSubstring = slicedWikiWordChunk.substring(0,commandKeyWordLength);
 							var slicedCommandChunk = slicedWikiWordChunk.slice(commandKeyWordLength).replace(/^\s+/g, "");
-							commandsTranscript = commandsTranscript.slice(commandKeyWordLength).replace(/^\s+/g, "");
+							//commandsTranscript = commandsTranscript.slice(commandKeyWordLength).replace(/^\s+/g, "");
 							if(commandKeyWordSubstring === keyWordsCommands[n]) {
 								isCommand = true;
+								commandsTranscript = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "").slice(wikiKeyWordLength).replace(/^\s+/g, "").slice(commandKeyWordLength).replace(/^\s+/g, "");
 								console.log("EXECUTING");
 								var replaceString = keyWordsOk[i] + "(\\s+?)*" + keyWordsWiki[k] + "(\\s+?)*" + keyWordsCommands[n];
 								executeTranscriptCommands(keyWordsCommands[n],slicedCommandChunk,replaceString);
