@@ -35,6 +35,7 @@ exports.startup = function() {
 	var hasBeenContinuouslyListening = false;
 	var isUserLanguageChange = false;
 	var isCommand = false;
+	var isLanguageChangeLanguage;
 
 	var userCommandsList = [];
 	var userCommandsActionList = [];
@@ -169,6 +170,7 @@ exports.startup = function() {
 					$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/error-finding-lang",{variables:{language:language}});
 				} else {
 					recognition.lang = languageIdentifiers[userSpecifiedLanguage];
+					isLanguageChangeLanguage = languageIdentifiers[userSpecifiedLanguage];
 					isLanguageChange = true
 					recognition.stop();
 					fullTranscript = fullTranscript.replace(new RegExp(replaceString + "(\\s+?)*" + language),"");
@@ -237,7 +239,7 @@ exports.startup = function() {
 				if(autochangeLang) {
 					recognition.lang = $tw.wiki.getTiddlerText("$:/language").replace("$:/languages/", "");
 				} else {
-					recognition.lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
+					recognition.lang = isLanguageChangeLanguage || $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
 				}
 				isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
 				recognition.start();
