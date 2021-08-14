@@ -121,9 +121,12 @@ exports.startup = function() {
 		} else if(isLanguageChange && !isContinuousListening) {
 			transcriptCounter = 0;
 			recognition.start();
-			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}})
+			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}});
 		} else if(isContinuousListening) {
 			transcriptCounter = 0;
+			if(isLanguageChange) {
+				$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}});
+			}
 			isRestartContinuousListening = true;
 			recognition.start();
 		}
@@ -165,6 +168,7 @@ exports.startup = function() {
 					fullTranscript = fullTranscript.replace(new RegExp(replaceString + "(\\s+?)*" + language),"");
 					$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/error-finding-lang",{variables:{language:language}});
 				} else {
+					console.log("SWITCHING LANGUAGE TO: " + userSpecifiedLanguage);
 					recognition.lang = languageIdentifiers[userSpecifiedLanguage];
 					isLanguageChange = true
 					recognition.stop();
