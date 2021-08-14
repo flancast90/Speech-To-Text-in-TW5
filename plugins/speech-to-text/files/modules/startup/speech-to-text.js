@@ -40,6 +40,8 @@ exports.startup = function() {
 	var userCommandsList = [];
 	var userCommandsActionList = [];
 
+	var commandsTranscript = "";
+
 	var userKeywordsOk,
 		userKeywordsWiki;
 
@@ -112,6 +114,7 @@ exports.startup = function() {
 			}
 			
 			fullTranscript = "";
+			commandsTranscript = "";
 			
 			// WE WANT TO CHANGE BUTTON COLOUR BACK TO BLACK HERE
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
@@ -144,6 +147,7 @@ exports.startup = function() {
 		}
 
 		fullTranscript = fullTranscript + transcript;
+		commandsTranscript = commandsTranscript + transcript;
 
 		var keyWordsOk = ["OK","ok","Ok","Okay","okay","Oké","oké"];
 		var keyWordsWiki = ["Wiki","wiki","Wikis","wikis","Vicky","vicky","Vichi","vichi","Vicchi","vicchi","WC","Wc","wc","Vichy","vichy","Witchy","witchy","VC","vc","Vecchi","vecchi"];
@@ -189,19 +193,19 @@ exports.startup = function() {
 			}
 		};
 
-		var startsWithOkWord = function(chunk) {
-			for(var i=0; i<keyWordsOk.length; i++) {
-				if(chunk.substring(0,keyWordsOk[i].length) === keyWordsOk[i]) {
+		var startsWithKeyword = function(chunk,keywords) {
+			for(var i=0; i<keywords.length; i++) {
+				if(chunk.substring(0,keywords[i].length) === keywords[i]) {
 					return true;
 				}
 			}
 			return false;
 		};
 
-		var removeOkWords = function(chunk) {
-			for(var i=0; i<keyWordsOk.length; i++) {
-				if(chunk.substring(0,keyWordsOk[i].length) === keyWordsOk[i]) {
-					return chunk.slice(keyWordsOk[i].length);
+		var removeKeyWords = function(chunk,keywords) {
+			for(var i=0; i<keywords.length; i++) {
+				if(chunk.substring(0,keywords[i].length) === keywords[i]) {
+					return chunk.slice(keywords[i].length);
 				}
 			}
 			return chunk;
@@ -210,24 +214,27 @@ exports.startup = function() {
 		var getTranscriptCommandsInner = function(transcriptChunk,okKeyWord,i) {
 			console.log(transcriptChunk);
 			var okKeyWordLength = okKeyWord.length;
-			var slicedChunk = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength);
-			slicedChunk = slicedChunk.replace(/^\s+/g, "");
+			var slicedChunk = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "");
+			commandsTranscript = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "");
+			console.log(slicedChunk);
 			for(var k=0; k<keyWordsWiki.length; k++) {
 				if(slicedChunk.indexOf(keyWordsWiki[k]) !== -1) {
 					var wikiKeyWordLength = keyWordsWiki[k].length;
 					var slicedWikiWordChunk = slicedChunk.slice(wikiKeyWordLength);
 					slicedWikiWordChunk = slicedWikiWordChunk.replace(/^\s+/g, "");
-					while(startsWithOkWord(slicedWikiWordChunk)) {
-						slicedWikiWordChunk = removeOkWords(slicedWikiWordChunk);
-						slicedWikiWordChunk = slicedWikiWordChunk.replace(/^\s+/g, "");
+					commandsTranscript = commandsTranscript.slice(wikiKeyWordLength).replace(/^\s+/g, "");
+					while(startsWithKeyword(slicedWikiWordChunk,keyWordsOk)) {
+						console.log("TRUE");
+						slicedWikiWordChunk = removeKeyWords(slicedWikiWordChunk,keyWordsOk).replace(/^\s+/g, "");
+						commandsTranscript = removeKeyWords(commandsTranscript,keyWordsOk).replace(/^\s+/g, "");
 					}
 					console.log("SLICED WIKIWORD CHUNK: " + slicedWikiWordChunk);
 					if(slicedChunk.substring(0,wikiKeyWordLength) === keyWordsWiki[k]) {
 						for(var n=0; n<keyWordsCommands.length; n++) {
 							var commandKeyWordLength = keyWordsCommands[n].length;
 							var commandKeyWordSubstring = slicedWikiWordChunk.substring(0,commandKeyWordLength);
-							var slicedCommandChunk = slicedWikiWordChunk.slice(commandKeyWordLength);
-							slicedCommandChunk = slicedCommandChunk.replace(/^\s+/g, "");
+							var slicedCommandChunk = slicedWikiWordChunk.slice(commandKeyWordLength).replace(/^\s+/g, "");
+							commandsTranscript = commandsTranscript.slice(commandKeyWordLength).replace(/^\s+/g, "");
 							if(commandKeyWordSubstring === keyWordsCommands[n]) {
 								isCommand = true;
 								console.log("EXECUTING");
@@ -247,6 +254,7 @@ exports.startup = function() {
 		};
 
 		var getTranscriptCommands = function(transcriptChunk) {
+			console.clear();
 			for(var i=0; i<keyWordsOk.length; i++) {
 				if(transcriptChunk.indexOf(keyWordsOk[i]) !== -1) {
 					getTranscriptCommandsInner(transcriptChunk,keyWordsOk[i],i);
@@ -254,7 +262,7 @@ exports.startup = function() {
 			}
 		};
 
-		getTranscriptCommands(fullTranscript);
+		getTranscriptCommands(commandsTranscript);
 
 		transcriptCounter += 1;
 		fullTranscriptCounter += 1;
