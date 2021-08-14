@@ -187,37 +187,66 @@ exports.startup = function() {
 			}
 		};
 
-		var getTranscriptCommands = function(transcriptChunk) {
+		var startsWithOkWord = function(chunk) {
 			for(var i=0; i<keyWordsOk.length; i++) {
-				if(transcriptChunk.includes(keyWordsOk[i])) {
-					var okKeyWordLength = keyWordsOk[i].length;
-					var slicedChunk = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength);
-					slicedChunk = slicedChunk.replace(/^\s+/g, "");
-					for(var k=0; k<keyWordsWiki.length; k++) {
-						if(slicedChunk.indexOf(keyWordsWiki[k]) !== -1) {
-							var wikiKeyWordLength = keyWordsWiki[k].length;
-							var slicedWikiWordChunk = slicedChunk.slice(wikiKeyWordLength);
-							slicedWikiWordChunk = slicedWikiWordChunk.replace(/^\s+/g, "");
-							if(slicedChunk.substring(0,wikiKeyWordLength) === keyWordsWiki[k]) {
-								for(var n=0; n<keyWordsCommands.length; n++) {
-									var commandKeyWordLength = keyWordsCommands[n].length;
-									var commandKeyWordSubstring = slicedWikiWordChunk.substring(0,commandKeyWordLength);
-									var slicedCommandChunk = slicedWikiWordChunk.slice(commandKeyWordLength);
-									slicedCommandChunk = slicedCommandChunk.replace(/^\s+/g, "");
-									if(commandKeyWordSubstring === keyWordsCommands[n]) {
-										isCommand = true;
-										var replaceString = keyWordsOk[i] + "(\\s+?)*" + keyWordsWiki[k] + "(\\s+?)*" + keyWordsCommands[n];
-										executeTranscriptCommands(keyWordsCommands[n],slicedCommandChunk,replaceString);
-									}
-								}
-							}
-							for(var m=0; m<keyWordsOk.length; m++) {
-								if(slicedWikiWordChunk.includes(keyWordsOk[m])) {
-									getTranscriptCommands(slicedWikiWordChunk);
-								}
+				if(chunk.substring(0,keyWordsOk[i].length) === keyWordsOk[i]) {
+					return true;
+				}
+			}
+			return false;
+		};
+
+		var removeOkWords = function(chunk) {
+			for(var i=0; i<keyWordsOk.length; i++) {
+				if(chunk.substring(0,keyWordsOk[i].length) === keyWordsOk[i]) {
+					return chunk.slice(keyWordsOk[i].length);
+				}
+			}
+			return chunk;
+		};
+
+		var getTranscriptCommandsInner = function(transcriptChunk,okKeyWord,i) {
+			console.log(transcriptChunk);
+			var okKeyWordLength = okKeyWord.length;
+			var slicedChunk = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength);
+			slicedChunk = slicedChunk.replace(/^\s+/g, "");
+			for(var k=0; k<keyWordsWiki.length; k++) {
+				if(slicedChunk.indexOf(keyWordsWiki[k]) !== -1) {
+					var wikiKeyWordLength = keyWordsWiki[k].length;
+					var slicedWikiWordChunk = slicedChunk.slice(wikiKeyWordLength);
+					slicedWikiWordChunk = slicedWikiWordChunk.replace(/^\s+/g, "");
+					while(startsWithOkWord(slicedWikiWordChunk)) {
+						slicedWikiWordChunk = removeOkWords(slicedWikiWordChunk);
+					}
+					console.log("SLICED WIKIWORD CHUNK: " + slicedWikiWordChunk);
+					if(slicedChunk.substring(0,wikiKeyWordLength) === keyWordsWiki[k]) {
+						for(var n=0; n<keyWordsCommands.length; n++) {
+							var commandKeyWordLength = keyWordsCommands[n].length;
+							var commandKeyWordSubstring = slicedWikiWordChunk.substring(0,commandKeyWordLength);
+							var slicedCommandChunk = slicedWikiWordChunk.slice(commandKeyWordLength);
+							slicedCommandChunk = slicedCommandChunk.replace(/^\s+/g, "");
+							if(commandKeyWordSubstring === keyWordsCommands[n]) {
+								isCommand = true;
+								console.log("EXECUTING");
+								var replaceString = keyWordsOk[i] + "(\\s+?)*" + keyWordsWiki[k] + "(\\s+?)*" + keyWordsCommands[n];
+								executeTranscriptCommands(keyWordsCommands[n],slicedCommandChunk,replaceString);
 							}
 						}
 					}
+					for(var m=0; m<keyWordsOk.length; m++) {
+						if(slicedWikiWordChunk.indexOf(keyWordsOk[m]) !== -1) {
+							console.log("RESTART");
+							getTranscriptCommandsInner(slicedWikiWordChunk,keyWordsOk[m],m);
+						}
+					}
+				}
+			}
+		};
+
+		var getTranscriptCommands = function(transcriptChunk) {
+			for(var i=0; i<keyWordsOk.length; i++) {
+				if(transcriptChunk.indexOf(keyWordsOk[i]) !== -1) {
+					getTranscriptCommandsInner(transcriptChunk,keyWordsOk[i],i);
 				}
 			}
 		};
