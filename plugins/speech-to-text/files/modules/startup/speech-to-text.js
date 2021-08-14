@@ -186,8 +186,6 @@ exports.startup = function() {
 			} else if(userCommandsList.indexOf(command) !== -1) {
 				var index = userCommandsList.indexOf(command);
 				var action = userCommandsActionList[index];
-				console.log("INVOKING ACTION");
-				console.log(action);
 				fullTranscript = fullTranscript.replace(new RegExp(replaceString),"");
 				$tw.rootWidget.invokeActionString(action);
 			}
@@ -212,11 +210,9 @@ exports.startup = function() {
 		};
 
 		var getTranscriptCommandsInner = function(transcriptChunk,okKeyWord,i) {
-			console.log(transcriptChunk);
 			var okKeyWordLength = okKeyWord.length;
 			var slicedChunk = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "");
 			//commandsTranscript = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "");
-			console.log(slicedChunk);
 			for(var k=0; k<keyWordsWiki.length; k++) {
 				if(slicedChunk.indexOf(keyWordsWiki[k]) !== -1) {
 					var wikiKeyWordLength = keyWordsWiki[k].length;
@@ -224,11 +220,9 @@ exports.startup = function() {
 					slicedWikiWordChunk = slicedWikiWordChunk.replace(/^\s+/g, "");
 					//commandsTranscript = commandsTranscript.slice(wikiKeyWordLength).replace(/^\s+/g, "");
 					while(startsWithKeyword(slicedWikiWordChunk,keyWordsOk)) {
-						console.log("TRUE");
 						slicedWikiWordChunk = removeKeyWords(slicedWikiWordChunk,keyWordsOk).replace(/^\s+/g, "");
 						commandsTranscript = removeKeyWords(commandsTranscript,keyWordsOk).replace(/^\s+/g, "");
 					}
-					console.log("SLICED WIKIWORD CHUNK: " + slicedWikiWordChunk);
 					if(slicedChunk.substring(0,wikiKeyWordLength) === keyWordsWiki[k]) {
 						for(var n=0; n<keyWordsCommands.length; n++) {
 							var commandKeyWordLength = keyWordsCommands[n].length;
@@ -238,7 +232,6 @@ exports.startup = function() {
 							if(commandKeyWordSubstring === keyWordsCommands[n]) {
 								isCommand = true;
 								commandsTranscript = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "").slice(wikiKeyWordLength).replace(/^\s+/g, "").slice(commandKeyWordLength).replace(/^\s+/g, "");
-								console.log("EXECUTING");
 								var replaceString = keyWordsOk[i] + "(\\s+?)*" + keyWordsWiki[k] + "(\\s+?)*" + keyWordsCommands[n];
 								executeTranscriptCommands(keyWordsCommands[n],slicedCommandChunk,replaceString);
 							}
@@ -246,7 +239,6 @@ exports.startup = function() {
 					}
 					for(var m=0; m<keyWordsOk.length; m++) {
 						if(slicedWikiWordChunk.indexOf(keyWordsOk[m]) !== -1) {
-							console.log("RESTART");
 							getTranscriptCommandsInner(slicedWikiWordChunk,keyWordsOk[m],m);
 						}
 					}
@@ -255,7 +247,6 @@ exports.startup = function() {
 		};
 
 		var getTranscriptCommands = function(transcriptChunk) {
-			console.clear();
 			for(var i=0; i<keyWordsOk.length; i++) {
 				if(transcriptChunk.indexOf(keyWordsOk[i]) !== -1) {
 					getTranscriptCommandsInner(transcriptChunk,keyWordsOk[i],i);
