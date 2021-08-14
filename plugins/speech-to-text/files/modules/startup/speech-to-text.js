@@ -60,14 +60,13 @@ exports.startup = function() {
 	};
 
 	var updateVoiceCommandLists = function(tiddlerList) {
-		var voiceCommandTiddlers = tiddlerList;
 		for(var i=0; i<tiddlerList.length; i++) {
 			var title = tiddlerList[i],
 				tiddlerFields = $tw.wiki.getTiddler(title).fields;
 			var userCommands = $tw.wiki.getTiddlerList(title,"voice-commands");
 			for(var k=0; k<userCommands.length; k++) {
-				userCommandsList[i + k] = userCommands[k];
-				userCommandsActionList[i + k] = tiddlerFields.text;
+				userCommandsList.push(userCommands[k]);
+				userCommandsActionList.push(tiddlerFields.text);
 			}
 		}
 	};
