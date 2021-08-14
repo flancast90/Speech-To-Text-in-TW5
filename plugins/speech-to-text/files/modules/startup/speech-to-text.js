@@ -182,6 +182,8 @@ exports.startup = function() {
 			} else if(userCommandsList.indexOf(command) !== -1) {
 				var index = userCommandsList.indexOf(command);
 				var action = userCommandsActionList[index];
+				console.log("INVOKING ACTION");
+				console.log(action);
 				fullTranscript = fullTranscript.replace(new RegExp(replaceString),"");
 				$tw.rootWidget.invokeActionString(action);
 			}
@@ -217,6 +219,7 @@ exports.startup = function() {
 					slicedWikiWordChunk = slicedWikiWordChunk.replace(/^\s+/g, "");
 					while(startsWithOkWord(slicedWikiWordChunk)) {
 						slicedWikiWordChunk = removeOkWords(slicedWikiWordChunk);
+						slicedWikiWordChunk = slicedWikiWordChunk.replace(/^\s+/g, "");
 					}
 					console.log("SLICED WIKIWORD CHUNK: " + slicedWikiWordChunk);
 					if(slicedChunk.substring(0,wikiKeyWordLength) === keyWordsWiki[k]) {
