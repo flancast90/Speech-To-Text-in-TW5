@@ -115,7 +115,6 @@ exports.startup = function() {
 			// WE WANT TO CHANGE BUTTON COLOUR BACK TO BLACK HERE
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording/ongoing");
 			$tw.wiki.deleteTiddler("$:/state/speech-to-text/recording");
-			$tw.wiki.deleteTiddler("$:/state/speech-to-text/transcript");
 			if(hasBeenContinuouslyListening) {
 				isContinuousListening = true;
 			}
