@@ -168,7 +168,6 @@ exports.startup = function() {
 					fullTranscript = fullTranscript.replace(new RegExp(replaceString + "(\\s+?)*" + language),"");
 					$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/error-finding-lang",{variables:{language:language}});
 				} else {
-					console.log("SWITCHING LANGUAGE TO: " + userSpecifiedLanguage);
 					recognition.lang = languageIdentifiers[userSpecifiedLanguage];
 					isLanguageChange = true
 					recognition.stop();
@@ -190,17 +189,18 @@ exports.startup = function() {
 			for(var i=0; i<keyWordsOk.length; i++) {
 				if(transcriptChunk.includes(keyWordsOk[i])) {
 					var okKeyWordLength = keyWordsOk[i].length;
-					var slicedChunk = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength + 1);
+					var slicedChunk = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength);
+					slicedChunk = slicedChunk.replace(/^\s+/g, "");
 					for(var k=0; k<keyWordsWiki.length; k++) {
 						if(slicedChunk.indexOf(keyWordsWiki[k]) !== -1) {
 							var wikiKeyWordLength = keyWordsWiki[k].length;
-							var slicedWikiWordChunk = slicedChunk.slice(wikiKeyWordLength + 1);
-							slicedWikiWordChunk = slicedWikiWordChunk.replace(/\s+$/, '');
+							var slicedWikiWordChunk = slicedChunk.slice(wikiKeyWordLength);
+							slicedWikiWordChunk = slicedWikiWordChunk.replace(/^\s+/g, "");
 							for(var n=0; n<keyWordsCommands.length; n++) {
 								var commandKeyWordLength = keyWordsCommands[n].length;
 								var commandKeyWordSubstring = slicedWikiWordChunk.substring(0,commandKeyWordLength);
-								var slicedCommandChunk = slicedWikiWordChunk.slice(commandKeyWordLength + 1);
-								slicedCommandChunk = slicedCommandChunk.replace(/\s+$/, '');
+								var slicedCommandChunk = slicedWikiWordChunk.slice(commandKeyWordLength);
+								slicedCommandChunk = slicedCommandChunk.replace(/^\s+/g, "");
 								if(commandKeyWordSubstring === keyWordsCommands[n]) {
 									isCommand = true;
 									var replaceString = keyWordsOk[i] + "(\\s+?)*" + keyWordsWiki[k] + "(\\s+?)*" + keyWordsCommands[n];
