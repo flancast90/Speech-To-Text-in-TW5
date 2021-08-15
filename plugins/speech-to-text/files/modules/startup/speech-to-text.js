@@ -161,8 +161,8 @@ exports.startup = function() {
 
 		keyWordsCommands = keyWordsCommands.concat(userCommandsList);
 
-		var languageNames = ["africaans", "afrikaans", "indonesian", "malaysian", "catalonian", "german", "danish", "english", "spanish", "basque", "french", "croatian", "icelandic", "italian", "hungarian", "netherlandic", "norwegian", "polish", "portuguese", "romanian", "slavic", "finish", "finnish", "swedish", "turkish", "bulgarian", "russian", "serbian", "korean", "chinese", "japanese", "persian", "latin"];
-		var languageIdentifiers = ["af-ZA", "af-ZA", "id-ID", "ms-MY", "ca-ES", "de-DE", "da-DK", "en-US", "es-ES", "eu-ES", "fr-FR", "hr-HR", "is-IS", "it-IT", "hu-HU", "nl-NL", "nb-NO", "pl-PL", "pt-PT", "ro-RO", "sk-SK", "fi-FI", "fi-FI", "sv-SE", "tr-TR", "bg-BG", "ru-RU", "sr-RS", "ko-KR", "cmn-Hans-CN", "ja-JP", "fa-IR", "la"];
+		var languageNames = ["africaans", "afrikaans", "indonesian", "malaysian", "malay", "catalonian", "catalan", "german", "danish", "english", "spanish", "basque", "french", "croatian", "icelandic", "italian", "hungarian", "netherlandic", "norwegian", "polish", "portuguese", "romanian", "slavic", "finish", "finnish", "swedish", "turkish", "bulgarian", "russian", "serbian", "korean", "chinese", "japanese", "persian", "latin"];
+		var languageIdentifiers = ["af-ZA", "af-ZA", "id-ID", "ms-MY", "ms-MY", "ca-ES", "ca-ES", "de-DE", "da-DK", "en-US", "es-ES", "eu-ES", "fr-FR", "hr-HR", "is-IS", "it-IT", "hu-HU", "nl-NL", "nb-NO", "pl-PL", "pt-PT", "ro-RO", "sk-SK", "fi-FI", "fi-FI", "sv-SE", "tr-TR", "bg-BG", "ru-RU", "sr-RS", "ko-KR", "cmn-Hans-CN", "ja-JP", "fa-IR", "la"];
 
 		var executeTranscriptCommands = function(command,chunk,replaceString) {
 			if(command.toLowerCase() === "switch language to") {
