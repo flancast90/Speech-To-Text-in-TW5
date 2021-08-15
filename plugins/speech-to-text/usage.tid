@@ -1,0 +1,14 @@
+title: $:/plugins/flancast90/speech-to-text/usage
+
+!!! Settings
+
+See the ~ControlPanel tab "Speech to Text" for all possible settings
+
+!!! VoiceCommands
+
+It's possible to create your own voice commands. To do so, follow these simple instructions:
+
+* Create a tiddler and tag it with <<tag-pill "$:/tags/VoiceCommand">>
+* Fill its ''text'' field with the desired `actions` that should be triggered
+* Fill its `voice-commands` field with a ''list'' of voice commands
+* Save the tiddler

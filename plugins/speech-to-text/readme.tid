@@ -1,3 +1,6 @@
 title: $:/plugins/flancast90/speech-to-text/readme
 
 !!! Speech to Text plugin
+
+A plugin that uses the [ext[SpeechRecognition API|https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition]]
+

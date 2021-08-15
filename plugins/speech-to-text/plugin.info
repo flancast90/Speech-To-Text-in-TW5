@@ -3,5 +3,5 @@
 	"description": "Speech to Text for TiddlyWiki5",
 	"author": "Finn Lancaster",
 	"version": "1.0.6-alpha",
-	"list": "readme license"
+	"list": "readme usage license"
 }
