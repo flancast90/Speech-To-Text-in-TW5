@@ -10,8 +10,13 @@ Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermol
 
 ### Releases/Version History
 
-
 <details><summary>Coming Soon!</summary>
+  <ul>
+    <li>Activate Plugin from Editor Toolbar!</li>
+    <li>various bug fixes and optimisation</li>
+  </ul>
+</details>
+<details><summary>v1.0.5</summary>
   <ul>
   	<li>Custom Verbal Commands: define command word and action!</li>
     <li>Better UI: minor edits for after recording stopped with command</li>
