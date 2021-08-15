@@ -1,5 +1,5 @@
 # Speech-to-text-in-TW5
-![License Badge](https://img.shields.io/badge/license-MIT-blue) [![release](https://img.shields.io/badge/release-latest-brightgreen)](https://github.com/flancast90/Speech-to-text-in-TW5/releases/latest) ![Repo size](https://img.shields.io/badge/size-1.3MB-orange)
+![License Badge](https://img.shields.io/badge/license-MIT-blue) [![release](https://img.shields.io/badge/release-latest-brightgreen)](https://github.com/flancast90/Speech-to-text-in-TW5/releases/latest) ![Repo size](https://img.shields.io/badge/size-1.5MB-orange)
 
 ### Summary
 
