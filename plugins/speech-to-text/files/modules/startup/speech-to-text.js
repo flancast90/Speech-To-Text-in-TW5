@@ -303,11 +303,10 @@ exports.startup = function() {
 						activeElement.value = newText;
 						activeElement.setSelectionRange(selStart,selStart + fullTranscript.length);
 				 	}
-				 	isPiping = false;
-					fullTranscript = "";
 				}
 			}
 			isPiping = false;
+			fullTranscript = "";
 		}
 
 		transcriptCounter += 1;
