@@ -3,7 +3,9 @@ tags: $:/tags/KeyboardShortcut
 key: ((toggle-recording))
 
 <$list filter="[{$:/state/speech-to-text/recording}match[yes]]" emptyMessage="""
+<$list filter="[[$:/state/speech-to-text/recording/ongoing]is[missing]]">
 <$action-setfield $tiddler="$:/state/speech-to-text/recording" text="yes"/>
+</$list>
 """>
 <$action-deletetiddler $tiddler="$:/state/speech-to-text/recording"/>
 </$list>
