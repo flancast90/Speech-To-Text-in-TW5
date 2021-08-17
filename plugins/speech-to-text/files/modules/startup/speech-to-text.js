@@ -127,7 +127,9 @@ exports.startup = function() {
 			}
 		} else if(isLanguageChange && !isContinuousListening) {
 			transcriptCounter = 0;
-			recognition.start();
+			try {
+				recognition.start();
+			} catch(e) {}
 			$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}});
 		} else if(isContinuousListening) {
 			transcriptCounter = 0;
@@ -135,7 +137,9 @@ exports.startup = function() {
 				$tw.notifier.display("$:/plugins/flancast90/speech-to-text/ui/Notifications/language-switch",{variables: {language: recognition.lang}});
 			}
 			isRestartContinuousListening = true;
-			recognition.start();
+			try {
+				recognition.start();
+			} catch(e) {}
 		}
 	}
 
@@ -354,7 +358,9 @@ exports.startup = function() {
 					recognition.lang = isLanguageChangeLanguage || $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
 				}
 				isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
-				recognition.start();
+				try {
+					recognition.start();
+				} catch(e) {}
 			} else if(isRecording && !recordingState) {
 				hasBeenContinuouslyListening = isContinuousListening;
 				isContinuousListening = false;
