@@ -46,6 +46,8 @@ caption: Speech to Text
 	<option value="yes">Yes</option>
 </$select>
 
+<hr>
+
 !!! Should the Speech Recognition automatically start on Startup?
 
 <$select tiddler="$:/config/speech-to-text/startup" field="text" default="no">
