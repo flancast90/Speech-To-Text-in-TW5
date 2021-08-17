@@ -158,14 +158,17 @@ exports.startup = function() {
 		var keyWordsStop = ["Stop listening","stop listening"];
 		if(userKeywordsOk.length > 0) {
 			keyWordsOk = keyWordsOk.concat(userKeywordsOk);
+			console.log(keyWordsOk);
 		}
 		if(userKeywordsWiki.length > 0) {
 			keyWordsWiki = keyWordsWiki.concat(userKeywordsWiki);
+			console.log(keyWordsWiki);
 		}
 		if(userKeywordsPipe.length > 0) {
 			keyWordsPipe = keyWordsPipe.concat(userKeywordsPipe);
 		}
 		if(userKeywordsStop.length > 0) {
+			console.log(userKeywordsStop);
 			keyWordsStop = keyWordsStop.concat(userKeywordsStop);
 		}
 		var keyWordsCommands = ["switch language to", "Switch language to", "stop listening", "Stop listening"];
@@ -272,6 +275,7 @@ exports.startup = function() {
 							var slicedStopChunk = slicedWikiWordChunk.slice(stopKeyWordLength).replace(/^\s+/g, "");
 							//commandsTranscript = commandsTranscript.slice(commandKeyWordLength).replace(/^\s+/g, "");
 							if(stopKeyWordSubstring === keyWordsStop[n]) {
+								console.log("EXECUTING STOP COMMAND");
 								isCommand = true;
 								commandsTranscript = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "").slice(wikiKeyWordLength).replace(/^\s+/g, "").slice(stopKeyWordLength).replace(/^\s+/g, "");
 								var replaceString = keyWordsOk[i] + "(\\s+?)*" + keyWordsWiki[k] + "(\\s+?)*" + keyWordsStop[n];
