@@ -3,13 +3,26 @@ tags: $:/tags/PageControls
 
 \whitespace trim
 <$reveal state="$:/state/speech-to-text/recording" type="nomatch" text="yes">
-<$button class=<<tv-config-toolbar-class>> set="$:/state/speech-to-text/recording" setTo="yes">
+<$button class=<<tv-config-toolbar-class>>>
+<$list filter="[[$:/state/speech-to-text/recording/ongoing]is[missing]]">
+<$action-setfield $tiddler="$:/state/speech-to-text/recording" text="yes"/>
+</$list>
+<$list filter="[<tv-config-toolbar-icons>match[yes]]">
 {{$:/plugins/flancast90/speech-to-text/images/record-button}}
+</$list>
+<$list filter="[<tv-config-toolbar-text>match[yes]]">
+<span class="tc-btn-text"><$text text="start recording"/></span>
+</$list>
 </$button>
 </$reveal>
 <$reveal state="$:/state/speech-to-text/recording" type="match" text="yes">
 <$button class={{{ [{$:/state/speech-to-text/recording/ongoing}match[yes]then<tv-config-toolbar-class>addsuffix[ tc-active-recording]] ~[<tv-config-toolbar-class>] }}}>
 <$action-deletetiddler $tiddler="$:/state/speech-to-text/recording"/>
+<$list filter="[<tv-config-toolbar-icons>match[yes]]">
 {{$:/plugins/flancast90/speech-to-text/images/record-button}}
+</$list>
+<$list filter="[<tv-config-toolbar-text>match[yes]]">
+<span class="tc-btn-text"><$text text="stop recording"/></span>
+</$list>
 </$button>
 </$reveal>
