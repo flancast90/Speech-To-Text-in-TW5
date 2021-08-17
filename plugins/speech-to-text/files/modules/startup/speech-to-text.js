@@ -35,6 +35,7 @@ exports.startup = function() {
 	var hasBeenContinuouslyListening = false;
 	var isUserLanguageChange = false;
 	var isCommand = false;
+	var isPiping = false;
 	var isLanguageChangeLanguage;
 
 	var userCommandsList = [];
@@ -43,7 +44,8 @@ exports.startup = function() {
 	var commandsTranscript = "";
 
 	var userKeywordsOk,
-		userKeywordsWiki;
+		userKeywordsWiki,
+		userKeywordsPipe;
 
 	// required for API to initialise
 	var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
@@ -150,12 +152,16 @@ exports.startup = function() {
 		commandsTranscript = commandsTranscript + transcript;
 
 		var keyWordsOk = ["OK","ok","Ok","Okay","okay","Oké","oké"];
-		var keyWordsWiki = ["Wiki","wiki","Wikis","wikis","Vicky","vicky","Vichi","vichi","Vicchi","vicchi","WC","Wc","wc","Vichy","vichy","Witchy","witchy","VC","vc","Vecchi","vecchi"];
+		var keyWordsWiki = ["Wiki","wiki","Wikis","wikis","Vicky","Vicki","vicki","vicky","Vichi","vichi","Vicchi","vicchi","WC","Wc","wc","Vichy","vichy","Witchy","witchy","VC","vc","Vecchi","vecchi"];
+		var keyWordsPipe = ["Pipe","pipe","Insert","insert"];
 		if(userKeywordsOk.length > 0) {
 			keyWordsOk = keyWordsOk.concat(userKeywordsOk);
 		}
 		if(userKeywordsWiki.length > 0) {
 			keyWordsWiki = keyWordsWiki.concat(userKeywordsWiki);
+		}
+		if(userKeywordsPipe.length > 0) {
+			keyWordsPipe = keyWordsPipe.concat(userKeywordsPipe);
 		}
 		var keyWordsCommands = ["switch language to", "Switch language to", "stop listening", "Stop listening"];
 
@@ -188,6 +194,9 @@ exports.startup = function() {
 				var action = userCommandsActionList[index];
 				fullTranscript = fullTranscript.replace(new RegExp(replaceString),"");
 				$tw.rootWidget.invokeActionString(action);
+			} else if(keyWordsPipe.indexOf(command) !== -1) {
+				isPiping = true;
+				fullTranscript = fullTranscript.replace(new RegExp(replaceString),"");
 			}
 		};
 
@@ -236,6 +245,18 @@ exports.startup = function() {
 								executeTranscriptCommands(keyWordsCommands[n],slicedCommandChunk,replaceString);
 							}
 						}
+						for(n=0; n<keyWordsPipe.length; n++) {
+							var pipeKeyWordLength = keyWordsPipe[n].length;
+							var pipeKeyWordSubstring = slicedWikiWordChunk.substring(0,pipeKeyWordLength);
+							var slicedPipeChunk = slicedWikiWordChunk.slice(pipeKeyWordLength).replace(/^\s+/g, "");
+							//commandsTranscript = commandsTranscript.slice(commandKeyWordLength).replace(/^\s+/g, "");
+							if(pipeKeyWordSubstring === keyWordsPipe[n]) {
+								isCommand = true;
+								commandsTranscript = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "").slice(wikiKeyWordLength).replace(/^\s+/g, "").slice(pipeKeyWordLength).replace(/^\s+/g, "");
+								var replaceString = keyWordsOk[i] + "(\\s+?)*" + keyWordsWiki[k] + "(\\s+?)*" + keyWordsPipe[n];
+								executeTranscriptCommands(keyWordsPipe[n],slicedPipeChunk,replaceString);
+							}
+						}
 					}
 					for(var m=0; m<keyWordsOk.length; m++) {
 						if(slicedWikiWordChunk.indexOf(keyWordsOk[m]) !== -1) {
@@ -255,6 +276,39 @@ exports.startup = function() {
 		};
 
 		getTranscriptCommands(commandsTranscript);
+
+		if(isPiping) {
+			var activeElement = document.activeElement;
+			var doc;
+			if(activeElement && activeElement.tagName.toUpperCase() === "IFRAME" && activeElement.className === "tc-edit-texteditor tc-edit-texteditor-body") {
+				doc = activeElement.contentDocument || activeElement.contentWindow.document;
+				activeElement = doc.activeElement;
+			} else {
+				doc = document;
+			}
+			if(window.CodeMirror && activeElement.closest(".CodeMirror")) {
+				var cm = activeElement.closest(".CodeMirror").CodeMirror;
+				cm.replaceSelection({replacement: fullTranscript});
+				isPiping = false;
+				fullTranscript = "";
+			} else if(activeElement && ((activeElement.tagName.toUpperCase() === "INPUT" && (activeElement.type.toUpperCase() === "TEXT" || activeElement.type.toUpperCase() === "SEARCH")) || activeElement.tagName.toUpperCase() === "TEXTAREA")) {
+				if(doc) {
+					if(doc.queryCommandSupported("insertText") && !$tw.browser.isFirefox) { 
+				 		doc.execCommand("insertText",false,fullTranscript);
+				 	} else {
+				 		var selStart = activeElement.selectionStart,
+							selEnd = activeElement.selectionEnd;
+						var value = activeElement.value;
+						var newText = value.substring(0,selStart) + fullTranscript + value.substring(selEnd,value.length);
+						activeElement.value = newText;
+						activeElement.setSelectionRange(selStart,selStart + fullTranscript.length);
+				 	}
+				 	isPiping = false;
+					fullTranscript = "";
+				}
+			}
+			isPiping = false;
+		}
 
 		transcriptCounter += 1;
 		fullTranscriptCounter += 1;
@@ -328,6 +382,7 @@ exports.startup = function() {
 	updateVoiceCommandLists(getVoiceCommandTiddlerList());
 	userKeywordsOk = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","ok-keywords");
 	userKeywordsWiki = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","wiki-keywords");
+	userKeywordsPipe = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","pipe-keywords");
 	isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
 	autochangeLang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/auto-change-language") === "yes";
 	var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
