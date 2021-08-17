@@ -45,7 +45,8 @@ exports.startup = function() {
 
 	var userKeywordsOk,
 		userKeywordsWiki,
-		userKeywordsPipe;
+		userKeywordsPipe,
+		userKeywordsStop;
 
 	// required for API to initialise
 	var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
@@ -154,6 +155,7 @@ exports.startup = function() {
 		var keyWordsOk = ["OK","ok","Ok","Okay","okay","Oké","oké"];
 		var keyWordsWiki = ["Wiki","wiki","Wikis","wikis","Vicky","Vicki","vicki","vicky","Vichi","vichi","Vicchi","vicchi","WC","Wc","wc","Vichy","vichy","Witchy","witchy","VC","vc","Vecchi","vecchi"];
 		var keyWordsPipe = ["Pipe","pipe","Insert","insert"];
+		var keyWordsStop = ["Stop listening","stop listening"];
 		if(userKeywordsOk.length > 0) {
 			keyWordsOk = keyWordsOk.concat(userKeywordsOk);
 		}
@@ -162,6 +164,9 @@ exports.startup = function() {
 		}
 		if(userKeywordsPipe.length > 0) {
 			keyWordsPipe = keyWordsPipe.concat(userKeywordsPipe);
+		}
+		if(userKeywordsStop.length > 0) {
+			keyWordsStop = keyWordsStop.concat(userKeywordsStop);
 		}
 		var keyWordsCommands = ["switch language to", "Switch language to", "stop listening", "Stop listening"];
 
@@ -196,6 +201,10 @@ exports.startup = function() {
 				$tw.rootWidget.invokeActionString(action);
 			} else if(keyWordsPipe.indexOf(command) !== -1) {
 				isPiping = true;
+				fullTranscript = fullTranscript.replace(new RegExp(replaceString),"");
+			} else if(keyWordsStop.indexOf(command) !== -1) {
+				isContinuousListening = false;
+				stopRecognizing = true;
 				fullTranscript = fullTranscript.replace(new RegExp(replaceString),"");
 			}
 		};
@@ -255,6 +264,18 @@ exports.startup = function() {
 								commandsTranscript = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "").slice(wikiKeyWordLength).replace(/^\s+/g, "").slice(pipeKeyWordLength).replace(/^\s+/g, "");
 								var replaceString = keyWordsOk[i] + "(\\s+?)*" + keyWordsWiki[k] + "(\\s+?)*" + keyWordsPipe[n];
 								executeTranscriptCommands(keyWordsPipe[n],slicedPipeChunk,replaceString);
+							}
+						}
+						for(n=0; n<keyWordsStop.length; n++) {
+							var stopKeyWordLength = keyWordsStop[n].length;
+							var stopKeyWordSubstring = slicedWikiWordChunk.substring(0,stopKeyWordLength);
+							var slicedStopChunk = slicedWikiWordChunk.slice(stopKeyWordLength).replace(/^\s+/g, "");
+							//commandsTranscript = commandsTranscript.slice(commandKeyWordLength).replace(/^\s+/g, "");
+							if(stopKeyWordSubstring === keyWordsStop[n]) {
+								isCommand = true;
+								commandsTranscript = transcriptChunk.slice(transcriptChunk.indexOf(keyWordsOk[i]) + okKeyWordLength).replace(/^\s+/g, "").slice(wikiKeyWordLength).replace(/^\s+/g, "").slice(stopKeyWordLength).replace(/^\s+/g, "");
+								var replaceString = keyWordsOk[i] + "(\\s+?)*" + keyWordsWiki[k] + "(\\s+?)*" + keyWordsStop[n];
+								executeTranscriptCommands(keyWordsStop[n],slicedStopChunk,replaceString);
 							}
 						}
 					}
@@ -346,6 +367,8 @@ exports.startup = function() {
 		if(changes["$:/config/speech-to-text/keywords"]) {
 			userKeywordsOk = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","ok-keywords");
 			userKeywordsWiki = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","wiki-keywords");
+			userKeywordsPipe = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","pipe-keywords");
+			userKeywordsStop = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","stop-keywords");
 		}
 		if(changes["$:/config/speech-to-text/language"]) {
 			var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
@@ -382,6 +405,7 @@ exports.startup = function() {
 	userKeywordsOk = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","ok-keywords");
 	userKeywordsWiki = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","wiki-keywords");
 	userKeywordsPipe = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","pipe-keywords");
+	userKeywordsStop = $tw.wiki.getTiddlerList("$:/config/speech-to-text/keywords","stop-keywords");
 	isContinuousListening = $tw.wiki.getTiddlerText("$:/config/speech-to-text/continuous") === "yes";
 	autochangeLang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/auto-change-language") === "yes";
 	var lang = $tw.wiki.getTiddlerText("$:/config/speech-to-text/language") || document.documentElement.lang;
