@@ -139,7 +139,6 @@ exports.startup = function() {
 	}
 
 	recognition.onresult = function(event) {
-		console.log(event);
 		var transcript = event.results[transcriptCounter][0].transcript;
 		var confidence = event.results[transcriptCounter][0].confidence;
 
