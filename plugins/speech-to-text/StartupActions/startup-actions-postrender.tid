@@ -1,0 +1,6 @@
+title: $:/plugins/flancast90/speech-to-text/StartupActions/PostRender
+tags: $:/tags/StartupAction/PostRender
+
+<$list filter="[{$:/config/speech-to-text/startup}match[yes]]">
+<$action-setfield $tiddler="$:/state/speech-to-text/recording" text="yes"/>
+</$list>
