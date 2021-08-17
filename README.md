@@ -76,6 +76,8 @@ Speech-to-Text-in-TW5, as the name implies, is a cutting-edge plugin for [Jermol
     <br />
     <li>In your terminal again, create a new wiki with <code>tiddlywiki mynewwiki --init server</code></li>
     <br />
+    <li>Then, cd to myneweiki, and open the ``tiddlywiki.info`` file there. Insert the lines ``"Speech-To-Text-in-TW5/plugins/speech-to-text"`` inside the "plugins: [`` section.
+    <br />
     <li>OPTIONAL: you may want to tell TiddlyWiki where the plugin will be found so you can store it in any folder. To do so, type <code>export TIDDLYWIKI_PLUGIN_PATH="$HOME/location_of_plugin"</code></li>
     <li>You then can install the latest version of the plugin via <a href="https://github.com/flancast90/Speech-To-Text-in-TW5/releases/latest/">This Link</a> as either a .zip or .tar.gz. *Make sure you extract the files to the location you specified in the last step!</li>
     <br />
