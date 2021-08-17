@@ -14,6 +14,18 @@ caption: Speech to Text
 
 <hr>
 
+!!! Choose your aliases for `stop listening` and `insert`
+
+!!!! Aliases for `stop listening` (as a list):
+
+<$edit-text tiddler="$:/config/speech-to-text/keywords" field="stop-keywords" default="" tag="input" placeholder="stop-keywords list"/>
+
+!!!! Aliases for `insert` (as a list):
+
+<$edit-text tiddler="$:/config/speech-to-text/keywords" field="pipe-keywords" default="" tag="input" placeholder="insert-keywords list"/>
+
+<hr>
+
 !!! Choose your language for speech-recognition
 
 <$select tiddler="$:/config/speech-to-text/language" field="text" default="">
