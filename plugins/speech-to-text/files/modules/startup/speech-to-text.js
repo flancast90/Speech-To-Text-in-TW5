@@ -288,15 +288,14 @@ exports.startup = function() {
 			}
 			if(window.CodeMirror && activeElement.closest(".CodeMirror")) {
 				var cm = activeElement.closest(".CodeMirror").CodeMirror;
-				cm.replaceSelection({replacement: fullTranscript.replace(/\s+$/, "")});
-				isPiping = false;
+				cm.replaceSelection(fullTranscript.replace(/^\s+/g, ""));
 				fullTranscript = "";
 			} else if(activeElement && ((activeElement.tagName.toUpperCase() === "INPUT" && (activeElement.type.toUpperCase() === "TEXT" || activeElement.type.toUpperCase() === "SEARCH")) || activeElement.tagName.toUpperCase() === "TEXTAREA")) {
 				if(doc) {
 					if(doc.queryCommandSupported("insertText") && !$tw.browser.isFirefox) { 
-				 		doc.execCommand("insertText",false,fullTranscript.replace(/\s+$/, ""));
+				 		doc.execCommand("insertText",false,fullTranscript.replace(/^\s+/g, ""));
 				 	} else {
-				 		fullTranscript = fullTranscript.replace(/\s+$/, "");
+				 		fullTranscript = fullTranscript.replace(/^\s+/g, "");
 				 		var selStart = activeElement.selectionStart,
 							selEnd = activeElement.selectionEnd;
 						var value = activeElement.value;
