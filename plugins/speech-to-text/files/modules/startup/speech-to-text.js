@@ -139,6 +139,7 @@ exports.startup = function() {
 	}
 
 	recognition.onresult = function(event) {
+		console.log(event);
 		var transcript = event.results[transcriptCounter][0].transcript;
 		var confidence = event.results[transcriptCounter][0].confidence;
 
@@ -303,10 +304,10 @@ exports.startup = function() {
 						activeElement.value = newText;
 						activeElement.setSelectionRange(selStart,selStart + fullTranscript.length);
 				 	}
+				 	fullTranscript = "";
 				}
 			}
 			isPiping = false;
-			fullTranscript = "";
 		}
 
 		transcriptCounter += 1;
