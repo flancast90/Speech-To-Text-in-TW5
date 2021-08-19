@@ -1,6 +1,13 @@
 # Speech-to-text-in-TW5
 ![License Badge](https://img.shields.io/badge/license-MIT-blue) [![release](https://img.shields.io/badge/release-latest-brightgreen)](https://github.com/flancast90/Speech-to-text-in-TW5/releases/latest) ![Repo size](https://img.shields.io/badge/size-1.5MB-orange)
 
+
+### First Things First, Browser Support
+
+The Speech-to-Text TW5 plugin works best in Chrome/Chromium environments, as well as in a Node.js TW in run in these same browsers. While still supported, optimal results cannot be guarunteed in iOS's Safari, Samsung Internet, or other mobile apps. Unfortunately, due to lack-of-API support, FireFox and Internet Explorer are not yet supported.
+
+<br />
+
 ### Summary
 
 
